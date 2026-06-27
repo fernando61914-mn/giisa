@@ -1,0 +1,12 @@
+# Astro
+astro/node_modules
+astro/dist
+
+# Strapi
+strapi/giisa/node_modules
+strapi/giisa/.cache
+strapi/giisa/build
+
+# General
+.DS_Store
+.env
