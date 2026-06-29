@@ -1,0 +1,21 @@
+{
+  "collectionName": "components_shared_services_showcases",
+  "info": {
+    "displayName": "Section Header"
+  },
+  "options": {},
+  "attributes": {
+    "Title": {
+      "type": "string"
+    },
+    "Subtitle": {
+      "type": "string"
+    },
+    "ShowAll": {
+      "type": "component",
+      "component": "shared.button",
+      "repeatable": false
+    }
+  },
+  "config": {}
+}

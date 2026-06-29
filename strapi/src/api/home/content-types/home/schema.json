@@ -1,0 +1,30 @@
+{
+  "kind": "singleType",
+  "collectionName": "homes",
+  "info": {
+    "singularName": "home",
+    "pluralName": "homes",
+    "displayName": "Home"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Hero": {
+      "type": "component",
+      "component": "shared.hero",
+      "repeatable": false
+    },
+    "Seo": {
+      "type": "component",
+      "component": "shared.seo",
+      "repeatable": false
+    },
+    "CTA": {
+      "type": "component",
+      "component": "shared.cta",
+      "repeatable": false
+    }
+  }
+}

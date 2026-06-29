@@ -1,24 +1,69 @@
 import type { Schema, Struct } from '@strapi/strapi';
 
-export interface SharedMedia extends Struct.ComponentSchema {
-  collectionName: 'components_shared_media';
+export interface SharedAbout extends Struct.ComponentSchema {
+  collectionName: 'components_shared_abouts';
   info: {
-    displayName: 'Media';
-    icon: 'file-video';
+    displayName: 'About';
   };
   attributes: {
-    file: Schema.Attribute.Media<'images' | 'files' | 'videos'>;
+    button: Schema.Attribute.Component<'shared.button', false>;
+    Description: Schema.Attribute.Blocks;
+    Image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    SectionHeader: Schema.Attribute.String;
+    Title: Schema.Attribute.String;
   };
 }
 
-export interface SharedQuote extends Struct.ComponentSchema {
-  collectionName: 'components_shared_quotes';
+export interface SharedButton extends Struct.ComponentSchema {
+  collectionName: 'components_shared_buttons';
   info: {
-    displayName: 'Quote';
-    icon: 'indent';
+    displayName: 'Button';
   };
   attributes: {
-    body: Schema.Attribute.Text;
+    openInNewTab: Schema.Attribute.Boolean;
+    texto: Schema.Attribute.String;
+    url: Schema.Attribute.String;
+  };
+}
+
+export interface SharedCta extends Struct.ComponentSchema {
+  collectionName: 'components_shared_ctas';
+  info: {
+    displayName: 'CTA';
+  };
+  attributes: {
+    button: Schema.Attribute.Component<'shared.button', true>;
+    description: Schema.Attribute.Text;
+    title: Schema.Attribute.String;
+  };
+}
+
+export interface SharedGallery extends Struct.ComponentSchema {
+  collectionName: 'components_shared_galleries';
+  info: {
+    displayName: 'Gallery';
+  };
+  attributes: {
+    Media: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios',
+      true
+    >;
+  };
+}
+
+export interface SharedHero extends Struct.ComponentSchema {
+  collectionName: 'components_shared_heroes';
+  info: {
+    displayName: 'Hero';
+    icon: 'book';
+  };
+  attributes: {
+    alignment: Schema.Attribute.Enumeration<['left', 'center', 'right']>;
+    backgroundImage: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios'
+    >;
+    button: Schema.Attribute.Component<'shared.button', false>;
+    subtitle: Schema.Attribute.Text;
     title: Schema.Attribute.String;
   };
 }
@@ -50,26 +95,54 @@ export interface SharedSeo extends Struct.ComponentSchema {
   };
 }
 
-export interface SharedSlider extends Struct.ComponentSchema {
-  collectionName: 'components_shared_sliders';
+export interface SharedServicesShowcase extends Struct.ComponentSchema {
+  collectionName: 'components_shared_services_showcases';
   info: {
-    description: '';
-    displayName: 'Slider';
-    icon: 'address-book';
+    displayName: 'Section Header';
   };
   attributes: {
-    files: Schema.Attribute.Media<'images', true>;
+    ShowAll: Schema.Attribute.Component<'shared.button', false>;
+    Subtitle: Schema.Attribute.String;
+    Title: Schema.Attribute.String;
+  };
+}
+
+export interface SharedStatistic extends Struct.ComponentSchema {
+  collectionName: 'components_shared_statistics';
+  info: {
+    displayName: 'Statistic';
+  };
+  attributes: {
+    icon: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    label: Schema.Attribute.String;
+    value: Schema.Attribute.String;
+  };
+}
+
+export interface SharedStatisticsSeccion extends Struct.ComponentSchema {
+  collectionName: 'components_shared_statistics_seccions';
+  info: {
+    displayName: 'Statistics Seccion';
+  };
+  attributes: {
+    RepeatableStatistic: Schema.Attribute.Component<'shared.statistic', true>;
+    SectionHeader: Schema.Attribute.String;
   };
 }
 
 declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
-      'shared.media': SharedMedia;
-      'shared.quote': SharedQuote;
+      'shared.about': SharedAbout;
+      'shared.button': SharedButton;
+      'shared.cta': SharedCta;
+      'shared.gallery': SharedGallery;
+      'shared.hero': SharedHero;
       'shared.rich-text': SharedRichText;
       'shared.seo': SharedSeo;
-      'shared.slider': SharedSlider;
+      'shared.services-showcase': SharedServicesShowcase;
+      'shared.statistic': SharedStatistic;
+      'shared.statistics-seccion': SharedStatisticsSeccion;
     }
   }
 }

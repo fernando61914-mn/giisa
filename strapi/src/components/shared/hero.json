@@ -1,0 +1,40 @@
+{
+  "collectionName": "components_shared_heroes",
+  "info": {
+    "displayName": "Hero",
+    "icon": "book"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "subtitle": {
+      "type": "text"
+    },
+    "backgroundImage": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "button": {
+      "type": "component",
+      "component": "shared.button",
+      "repeatable": false
+    },
+    "alignment": {
+      "type": "enumeration",
+      "enum": [
+        "left",
+        "center",
+        "right"
+      ]
+    }
+  },
+  "config": {}
+}

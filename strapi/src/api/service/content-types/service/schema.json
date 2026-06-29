@@ -1,0 +1,60 @@
+{
+  "kind": "collectionType",
+  "collectionName": "services",
+  "info": {
+    "singularName": "service",
+    "pluralName": "services",
+    "displayName": "Service"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "title"
+    },
+    "shortDescription": {
+      "type": "string"
+    },
+    "content": {
+      "type": "blocks"
+    },
+    "coverlmage": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "icon": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "order": {
+      "type": "integer"
+    },
+    "featured": {
+      "type": "boolean"
+    },
+    "service": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::project.project",
+      "mappedBy": "services"
+    }
+  }
+}

@@ -1,61 +1,61 @@
 /**
  * ─────────────────────────────────────────────────────────────────────────────
  * BRAND CONFIGURATION
- * ─────────────────────────────────────────────────────────────────────────────
- * Single file to edit when adapting the theme for a new client.
- *
- * Colors flow into  → src/styles/theme.css  (CSS custom properties)
- * Fonts flow into   → astro.config.mjs      (Astro 6 built-in font optimizer)
- * Meta flows into   → src/layouts/BaseLayout.astro
- *
- * Color format: use hex (#1a1a2e) or CSS color values.
+ * Grupo de Infraestructura Integral
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
 export const brand = {
   // ── Site Identity ──────────────────────────────────────────────────────────
-  name: 'Small Business Starter',
-  tagline: 'Professional service you can trust.',
+  name: 'Grupo de Infraestructura Integral',
+  tagline: 'Construcción y Supervisión de Proyectos.',
   description:
-    'A fast, mobile-first small-business website template built with Astro 6 and Tailwind v4. Fully customisable for any trade or service business.',
-  url: 'https://example.com',
-  locale: 'en_US',
+    'Grupo de Infraestructura Integral es una empresa especializada en construcción, supervisión e infraestructura, ofreciendo soluciones integrales con altos estándares de calidad, seguridad y cumplimiento.',
+  url: 'https://gii.com.mx',
+  locale: 'es_MX',
 
   // ── Fonts ──────────────────────────────────────────────────────────────────
-  // To swap fonts: change the `name` values here AND update astro.config.mjs
-  // to match (both must stay in sync so Astro can optimise the correct files).
   fonts: {
     body: 'Inter',
-    display: 'Oswald',
+    display: 'Montserrat',
   },
 
   // ── Colour Palette ─────────────────────────────────────────────────────────
-  // These values are written to CSS custom properties in theme.css.
-  // Tailwind v4 @theme picks them up automatically.
   colors: {
-    primary:      '#1B3A6B',
-    primaryLight: '#2563EB',
-    primaryFg:    '#ffffff',
+    // Azul corporativo
+    primary: '#005BAA',
 
-    accent:       '#F97316',
-    accentFg:     '#ffffff',
+    // Azul más claro para hover
+    primaryLight: '#1976D2',
 
-    background:   '#ffffff',
-    surface:      '#F8FAFC',
-    border:       '#E2E8F0',
+    primaryFg: '#FFFFFF',
 
-    text:         '#0F172A',
-    textMuted:    '#475569',
+    // Verde del logo
+    accent: '#5DAE2B',
 
-    dark:         '#0F172A',
-    darkSurface:  '#1E293B',
+    accentFg: '#FFFFFF',
+
+    // Fondos
+    background: '#FFFFFF',
+    surface: '#F5F7FA',
+
+    // Bordes
+    border: '#D9E2EC',
+
+    // Texto
+    text: '#2F3743',
+    textMuted: '#6B7280',
+
+    // Footer
+    dark: '#023A70',
+    darkSurface: '#012C55',
   },
 
   // ── Border radius ──────────────────────────────────────────────────────────
   radius: {
-    sm:   '0.375rem',
-    md:   '0.625rem',
-    lg:   '1rem',
+    sm: '0.5rem',
+    md: '0.875rem',
+    lg: '1.25rem',
     full: '9999px',
   },
 } as const;

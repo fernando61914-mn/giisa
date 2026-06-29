@@ -1,47 +1,20 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
-import Hero from '../components/Hero.astro';
-import TrustBar from '../components/TrustBar.astro';
-import Services from '../components/Services.astro';
-import About from '../components/About.astro';
-import Reviews from '../components/Reviews.astro';
-import Gallery from '../components/Gallery.astro';
-import CTA from '../components/CTA.astro';
-import { brand } from '../config/brand';
-import { client } from '../data/client';
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Hero from "../components/Hero.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+
+import { getHome } from "../lib/api/home";
+
+const home = await getHome();
 ---
 
-<BaseLayout
-  title={brand.name}
-  description={brand.description}
-  schema={{
-    '@context': 'https://schema.org',
-    '@type': 'LocalBusiness',
-    name: client.name,
-    telephone: client.phoneForTel,
-    email: client.email,
-    address: {
-      '@type': 'PostalAddress',
-      streetAddress: client.address.lineOne,
-      addressLocality: client.address.city,
-      addressRegion: client.address.state,
-      postalCode: client.address.zip,
-      addressCountry: client.address.country,
-    },
-    url: client.domain,
-  }}
->
+<BaseLayout>
   <Header slot="header" />
-
-  <Hero />
-  <TrustBar />
-  <Services />
-  <About />
-  <Reviews />
-  <Gallery />
-  <CTA />
-
+  <Hero
+    heading={home.Hero.title}
+    description={home.Hero.subtitle}
+    imageSrc={`${import.meta.env.PUBLIC_STRAPI_URL}${home.Hero.backgroundImage.url}`}
+  />
   <Footer slot="footer" />
 </BaseLayout>

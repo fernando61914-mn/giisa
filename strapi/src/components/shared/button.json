@@ -1,0 +1,19 @@
+{
+  "collectionName": "components_shared_buttons",
+  "info": {
+    "displayName": "Button"
+  },
+  "options": {},
+  "attributes": {
+    "texto": {
+      "type": "string"
+    },
+    "url": {
+      "type": "string"
+    },
+    "openInNewTab": {
+      "type": "boolean"
+    }
+  },
+  "config": {}
+}

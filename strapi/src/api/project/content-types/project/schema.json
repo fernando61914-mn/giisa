@@ -1,0 +1,61 @@
+{
+  "kind": "collectionType",
+  "collectionName": "projects",
+  "info": {
+    "singularName": "project",
+    "pluralName": "projects",
+    "displayName": "Project"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "title"
+    },
+    "client": {
+      "type": "string"
+    },
+    "location": {
+      "type": "string"
+    },
+    "complationDate": {
+      "type": "date"
+    },
+    "shortDescription": {
+      "type": "string"
+    },
+    "content": {
+      "type": "blocks"
+    },
+    "coverlmage": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "gallery": {
+      "type": "component",
+      "component": "shared.gallery",
+      "repeatable": false
+    },
+    "featured": {
+      "type": "boolean"
+    },
+    "services": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::service.service",
+      "inversedBy": "service"
+    }
+  }
+}

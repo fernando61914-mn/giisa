@@ -1,0 +1,18 @@
+{
+  "collectionName": "components_shared_statistics_seccions",
+  "info": {
+    "displayName": "Statistics Seccion"
+  },
+  "options": {},
+  "attributes": {
+    "SectionHeader": {
+      "type": "string"
+    },
+    "RepeatableStatistic": {
+      "type": "component",
+      "component": "shared.statistic",
+      "repeatable": true
+    }
+  },
+  "config": {}
+}

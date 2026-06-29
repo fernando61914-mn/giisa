@@ -1,0 +1,26 @@
+{
+  "collectionName": "components_shared_statistics",
+  "info": {
+    "displayName": "Statistic"
+  },
+  "options": {},
+  "attributes": {
+    "label": {
+      "type": "string"
+    },
+    "value": {
+      "type": "string"
+    },
+    "icon": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    }
+  },
+  "config": {}
+}
