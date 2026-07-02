@@ -480,7 +480,7 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
 export interface ApiContactContact extends Struct.SingleTypeSchema {
   collectionName: 'contacts';
   info: {
-    displayName: 'Contact';
+    displayName: 'Contacto';
     pluralName: 'contacts';
     singularName: 'contact';
   };
@@ -488,32 +488,34 @@ export interface ApiContactContact extends Struct.SingleTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
-    address: Schema.Attribute.Text;
+    correo: Schema.Attribute.Email;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    Email: Schema.Attribute.Email;
-    googleMapsUrl: Schema.Attribute.Text;
-    Hero: Schema.Attribute.Component<'shared.hero', false>;
+    direccion: Schema.Attribute.Text;
+    encabezado: Schema.Attribute.Component<'shared.section-header', false>;
+    hero: Schema.Attribute.Component<'shared.hero', false>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::contact.contact'
     > &
       Schema.Attribute.Private;
-    Phone: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
-    Seo: Schema.Attribute.Component<'shared.seo', false>;
+    seo: Schema.Attribute.Component<'shared.seo', false>;
+    telefono: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    urlGoogleMaps: Schema.Attribute.Text;
+    whatsapp: Schema.Attribute.String;
   };
 }
 
 export interface ApiHomeHome extends Struct.SingleTypeSchema {
   collectionName: 'homes';
   info: {
-    displayName: 'Home';
+    displayName: 'Inicio';
     pluralName: 'homes';
     singularName: 'home';
   };
@@ -521,16 +523,40 @@ export interface ApiHomeHome extends Struct.SingleTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
+    barraConfianza: Schema.Attribute.Component<'shared.trust-bar-item', true>;
+    botonProyectos: Schema.Attribute.Component<'shared.button', false>;
+    botonServicios: Schema.Attribute.Component<'shared.button', false>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    CTA: Schema.Attribute.Component<'shared.cta', false>;
-    Hero: Schema.Attribute.Component<'shared.hero', false>;
+    encabezadoProyectos: Schema.Attribute.Component<
+      'shared.section-header',
+      false
+    >;
+    encabezadoServicios: Schema.Attribute.Component<
+      'shared.section-header',
+      false
+    >;
+    estadisticas: Schema.Attribute.Component<
+      'shared.statistics-seccion',
+      false
+    >;
+    hero: Schema.Attribute.Component<'shared.hero', false>;
+    llamadoAccion: Schema.Attribute.Component<'shared.cta', false>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::home.home'> &
       Schema.Attribute.Private;
+    nosotros: Schema.Attribute.Component<'shared.about', false>;
+    proyectosDestacados: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::project.project'
+    >;
     publishedAt: Schema.Attribute.DateTime;
-    Seo: Schema.Attribute.Component<'shared.seo', false>;
+    seo: Schema.Attribute.Component<'shared.seo', false>;
+    serviciosDestacados: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::service.service'
+    >;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -540,7 +566,7 @@ export interface ApiHomeHome extends Struct.SingleTypeSchema {
 export interface ApiProjectProject extends Struct.CollectionTypeSchema {
   collectionName: 'projects';
   info: {
-    displayName: 'Project';
+    displayName: 'Proyecto';
     pluralName: 'projects';
     singularName: 'project';
   };
@@ -548,29 +574,27 @@ export interface ApiProjectProject extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
-    client: Schema.Attribute.String;
-    complationDate: Schema.Attribute.Date;
-    content: Schema.Attribute.Blocks;
-    coverlmage: Schema.Attribute.Media<
-      'images' | 'files' | 'videos' | 'audios'
-    >;
+    cliente: Schema.Attribute.String;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    featured: Schema.Attribute.Boolean;
-    gallery: Schema.Attribute.Component<'shared.gallery', false>;
+    descripcionCompleta: Schema.Attribute.Blocks;
+    descripcionCorta: Schema.Attribute.String;
+    destacado: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    fechaCompletado: Schema.Attribute.Date;
+    galeria: Schema.Attribute.Component<'shared.gallery', false>;
+    imagenPrincipal: Schema.Attribute.Media<'images'>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::project.project'
     > &
       Schema.Attribute.Private;
-    location: Schema.Attribute.String;
+    nombre: Schema.Attribute.String & Schema.Attribute.Required;
     publishedAt: Schema.Attribute.DateTime;
-    services: Schema.Attribute.Relation<'manyToMany', 'api::service.service'>;
-    shortDescription: Schema.Attribute.String;
-    slug: Schema.Attribute.UID<'title'>;
-    title: Schema.Attribute.String;
+    seo: Schema.Attribute.Component<'shared.seo', false>;
+    slug: Schema.Attribute.UID<'nombre'>;
+    ubicacion: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -580,7 +604,7 @@ export interface ApiProjectProject extends Struct.CollectionTypeSchema {
 export interface ApiServiceService extends Struct.CollectionTypeSchema {
   collectionName: 'services';
   info: {
-    displayName: 'Service';
+    displayName: 'Servicio';
     pluralName: 'services';
     singularName: 'service';
   };
@@ -588,27 +612,25 @@ export interface ApiServiceService extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
-    content: Schema.Attribute.Blocks;
-    coverlmage: Schema.Attribute.Media<
-      'images' | 'files' | 'videos' | 'audios'
-    >;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    featured: Schema.Attribute.Boolean;
-    icon: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    descripcionCompleta: Schema.Attribute.Blocks;
+    descripcionCorta: Schema.Attribute.String;
+    destacado: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    icono: Schema.Attribute.String;
+    imagenPrincipal: Schema.Attribute.Media<'images'>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::service.service'
     > &
       Schema.Attribute.Private;
-    order: Schema.Attribute.Integer;
+    nombre: Schema.Attribute.String & Schema.Attribute.Required;
+    orden: Schema.Attribute.Integer;
     publishedAt: Schema.Attribute.DateTime;
-    service: Schema.Attribute.Relation<'manyToMany', 'api::project.project'>;
-    shortDescription: Schema.Attribute.String;
-    slug: Schema.Attribute.UID<'title'>;
-    title: Schema.Attribute.String;
+    seo: Schema.Attribute.Component<'shared.seo', false>;
+    slug: Schema.Attribute.UID<'nombre'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;

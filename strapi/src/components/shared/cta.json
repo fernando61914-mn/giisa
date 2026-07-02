@@ -5,15 +5,27 @@
   },
   "options": {},
   "attributes": {
-    "title": {
+    "titulo": {
       "type": "string"
     },
-    "description": {
+    "descripcion": {
       "type": "text"
     },
-    "button": {
+    "imagenFondo": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "boton": {
       "type": "component",
       "component": "shared.button",
+      "repeatable": false
+    },
+    "beneficios": {
+      "type": "component",
+      "component": "shared.benefit",
       "repeatable": true
     }
   },

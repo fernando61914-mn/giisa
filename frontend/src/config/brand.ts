@@ -30,10 +30,10 @@ export const brand = {
 
     primaryFg: '#FFFFFF',
 
-    // Verde del logo
-    accent: '#5DAE2B',
+    // Verde vivo del logo
+    accent: '#27AE27',
 
-    accentFg: '#FFFFFF',
+    accentFg: '#0D1F5C',
 
     // Fondos
     background: '#FFFFFF',
@@ -47,8 +47,8 @@ export const brand = {
     textMuted: '#6B7280',
 
     // Footer
-    dark: '#023A70',
-    darkSurface: '#012C55',
+    dark: '#0D1F5C',
+    darkSurface: '#081440',
   },
 
   // ── Border radius ──────────────────────────────────────────────────────────

@@ -1,0 +1,19 @@
+{
+  "collectionName": "components_shared_trust_bar_items",
+  "info": {
+    "displayName": "Trust Bar Item"
+  },
+  "options": {},
+  "attributes": {
+    "icono": {
+      "type": "string"
+    },
+    "titulo": {
+      "type": "string"
+    },
+    "descripcion": {
+      "type": "text"
+    }
+  },
+  "config": {}
+}

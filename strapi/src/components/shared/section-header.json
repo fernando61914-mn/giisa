@@ -1,0 +1,19 @@
+{
+  "collectionName": "components_shared_section_headers",
+  "info": {
+    "displayName": "Section Header"
+  },
+  "options": {},
+  "attributes": {
+    "textoSuperior": {
+      "type": "string"
+    },
+    "titulo": {
+      "type": "string"
+    },
+    "descripcion": {
+      "type": "text"
+    }
+  },
+  "config": {}
+}

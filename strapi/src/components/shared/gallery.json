@@ -5,14 +5,11 @@
   },
   "options": {},
   "attributes": {
-    "Media": {
+    "imagenes": {
       "type": "media",
       "multiple": true,
       "allowedTypes": [
-        "images",
-        "files",
-        "videos",
-        "audios"
+        "images"
       ]
     }
   },

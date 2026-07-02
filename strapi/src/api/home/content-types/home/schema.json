@@ -4,26 +4,71 @@
   "info": {
     "singularName": "home",
     "pluralName": "homes",
-    "displayName": "Home"
+    "displayName": "Inicio"
   },
   "options": {
     "draftAndPublish": true
   },
   "pluginOptions": {},
   "attributes": {
-    "Hero": {
+    "hero": {
       "type": "component",
       "component": "shared.hero",
       "repeatable": false
     },
-    "Seo": {
+    "barraConfianza": {
       "type": "component",
-      "component": "shared.seo",
+      "component": "shared.trust-bar-item",
+      "repeatable": true
+    },
+    "nosotros": {
+      "type": "component",
+      "component": "shared.about",
       "repeatable": false
     },
-    "CTA": {
+    "estadisticas": {
+      "type": "component",
+      "component": "shared.statistics-seccion",
+      "repeatable": false
+    },
+    "encabezadoServicios": {
+      "type": "component",
+      "component": "shared.section-header",
+      "repeatable": false
+    },
+    "serviciosDestacados": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::service.service"
+    },
+    "botonServicios": {
+      "type": "component",
+      "component": "shared.button",
+      "repeatable": false
+    },
+    "encabezadoProyectos": {
+      "type": "component",
+      "component": "shared.section-header",
+      "repeatable": false
+    },
+    "proyectosDestacados": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::project.project"
+    },
+    "botonProyectos": {
+      "type": "component",
+      "component": "shared.button",
+      "repeatable": false
+    },
+    "llamadoAccion": {
       "type": "component",
       "component": "shared.cta",
+      "repeatable": false
+    },
+    "seo": {
+      "type": "component",
+      "component": "shared.seo",
       "repeatable": false
     }
   }

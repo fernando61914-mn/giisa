@@ -6,34 +6,31 @@
   },
   "options": {},
   "attributes": {
-    "title": {
+    "textoSuperior": {
       "type": "string"
     },
-    "subtitle": {
+    "titulo": {
+      "type": "string"
+    },
+    "subtitulo": {
       "type": "text"
     },
-    "backgroundImage": {
+    "imagenFondo": {
       "type": "media",
       "multiple": false,
       "allowedTypes": [
-        "images",
-        "files",
-        "videos",
-        "audios"
+        "images"
       ]
     },
-    "button": {
+    "botonPrincipal": {
       "type": "component",
       "component": "shared.button",
       "repeatable": false
     },
-    "alignment": {
-      "type": "enumeration",
-      "enum": [
-        "left",
-        "center",
-        "right"
-      ]
+    "botonSecundario": {
+      "type": "component",
+      "component": "shared.button",
+      "repeatable": false
     }
   },
   "config": {}

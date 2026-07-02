@@ -1,0 +1,98 @@
+---
+import type { EncabezadoSeccion, Boton } from '../lib/types/shared';
+import type { Proyecto } from '../lib/types/project';
+import { strapiImageUrl } from '../lib/strapi';
+
+interface Props {
+  encabezado?: EncabezadoSeccion;
+  proyectos?: Proyecto[];
+  boton?: Boton;
+}
+
+const { encabezado, proyectos = [], boton } = Astro.props;
+
+const textoSuperior = encabezado?.textoSuperior ?? 'Nuestro portafolio';
+const titulo        = encabezado?.titulo        ?? 'Proyectos Destacados';
+
+const PLACEHOLDER_IMG = 'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=600&q=70';
+---
+
+<section id="proyectos" class="bg-background py-section">
+  <div class="mx-auto max-w-site px-4 sm:px-6">
+
+    <!-- Encabezado -->
+    <div data-reveal class="mx-auto mb-12 max-w-2xl text-center">
+      <span class="text-topper font-bold uppercase tracking-widest text-accent">{textoSuperior}</span>
+      <h2 class="mt-2 font-heading text-h2 font-bold text-text">{titulo}</h2>
+    </div>
+
+    <!-- Grid de proyectos -->
+    {proyectos.length > 0 ? (
+      <ul class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4" role="list">
+        {proyectos.map((p) => {
+          const imgSrc = p.imagenPrincipal ? strapiImageUrl(p.imagenPrincipal.url) : PLACEHOLDER_IMG;
+          return (
+            <li>
+              <a
+                href={`/projects/${p.slug}`}
+                class="group relative flex aspect-square overflow-hidden rounded-xl shadow-md"
+              >
+                <img
+                  src={imgSrc}
+                  alt={p.imagenPrincipal?.alternativeText ?? p.nombre}
+                  width={400}
+                  height={400}
+                  loading="lazy"
+                  decoding="async"
+                  class="size-full object-cover transition-transform duration-300 group-hover:scale-105"
+                />
+                <!-- Overlay con texto -->
+                <div class="absolute inset-0 flex flex-col justify-end bg-linear-to-t from-dark/80 via-dark/30 to-transparent p-4 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                  <h3 class="font-heading text-base font-bold text-white">{p.nombre}</h3>
+                  {p.descripcionCorta && (
+                    <p class="mt-1 text-xs text-white/80 line-clamp-2">{p.descripcionCorta}</p>
+                  )}
+                </div>
+                <!-- Nombre siempre visible abajo -->
+                <div class="absolute bottom-0 left-0 right-0 bg-linear-to-t from-dark/70 to-transparent p-4 group-hover:opacity-0 transition-opacity duration-300">
+                  <h3 class="font-heading text-sm font-bold text-white">{p.nombre}</h3>
+                </div>
+              </a>
+            </li>
+          );
+        })}
+      </ul>
+    ) : (
+      <!-- Fallback estático -->
+      <ul class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4" role="list">
+        {[
+          'Nave industrial',
+          'Puente vehicular',
+          'Edificio corporativo',
+          'Carretera federal',
+        ].map((nombre) => (
+          <li>
+            <div class="group relative flex aspect-square overflow-hidden rounded-xl shadow-md">
+              <img src={PLACEHOLDER_IMG} alt={nombre} width={400} height={400} loading="lazy" class="size-full object-cover opacity-80" />
+              <div class="absolute bottom-0 left-0 right-0 bg-linear-to-t from-dark/70 to-transparent p-4">
+                <h3 class="font-heading text-sm font-bold text-white">{nombre}</h3>
+              </div>
+            </div>
+          </li>
+        ))}
+      </ul>
+    )}
+
+    <!-- Botón ver todos -->
+    {boton && (
+      <div class="mt-10 text-center">
+        <a
+          href={boton.url}
+          class="inline-flex min-h-11 items-center gap-2 rounded-md border-2 border-primary px-7 py-3 text-base font-bold text-primary transition-colors hover:bg-primary hover:text-primary-fg"
+        >
+          {boton.texto}
+        </a>
+      </div>
+    )}
+  </div>
+</section>

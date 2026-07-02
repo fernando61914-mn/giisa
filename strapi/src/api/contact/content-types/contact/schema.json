@@ -4,31 +4,39 @@
   "info": {
     "singularName": "contact",
     "pluralName": "contacts",
-    "displayName": "Contact"
+    "displayName": "Contacto"
   },
   "options": {
     "draftAndPublish": true
   },
   "pluginOptions": {},
   "attributes": {
-    "Hero": {
+    "hero": {
       "type": "component",
       "component": "shared.hero",
       "repeatable": false
     },
-    "address": {
+    "encabezado": {
+      "type": "component",
+      "component": "shared.section-header",
+      "repeatable": false
+    },
+    "direccion": {
       "type": "text"
     },
-    "Phone": {
+    "telefono": {
       "type": "string"
     },
-    "Email": {
+    "whatsapp": {
+      "type": "string"
+    },
+    "correo": {
       "type": "email"
     },
-    "googleMapsUrl": {
+    "urlGoogleMaps": {
       "type": "text"
     },
-    "Seo": {
+    "seo": {
       "type": "component",
       "component": "shared.seo",
       "repeatable": false

@@ -1,0 +1,50 @@
+---
+import type { SeccionEstadisticas } from "../lib/types/shared";
+
+interface Props {
+  data?: SeccionEstadisticas;
+}
+
+const { data } = Astro.props;
+
+const estadisticas = data?.estadisticas ?? [
+  { valor: "+250", etiqueta: "Proyectos completados" },
+  { valor: "+18", etiqueta: "Años de experiencia" },
+  { valor: "+120", etiqueta: "Clientes satisfechos" },
+  { valor: "95%", etiqueta: "De satisfacción" },
+];
+---
+
+<section class="bg-dark py-14 sm:py-16">
+  <div data-reveal class="mx-auto max-w-site px-4 sm:px-6">
+    {
+      data?.encabezado && (
+        <div class="mb-10 text-center">
+          {data.encabezado.textoSuperior && (
+            <span class="text-topper font-bold uppercase tracking-widest text-accent">
+              {data.encabezado.textoSuperior}
+            </span>
+          )}
+          <h2 class="mt-2 font-heading text-h2 font-bold text-white">
+            {data.encabezado.titulo}
+          </h2>
+        </div>
+      )
+    }
+
+    <div data-reveal-stagger class="grid grid-cols-2 gap-8 lg:grid-cols-4">
+      {
+        estadisticas.map(({ valor, etiqueta }) => (
+          <div class="text-center">
+            <p class="font-heading text-display font-bold text-accent">
+              {valor}
+            </p>
+            <p class="mt-1 text-sm font-medium text-white/70 uppercase tracking-wide">
+              {etiqueta}
+            </p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>

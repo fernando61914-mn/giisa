@@ -8,15 +8,15 @@
   },
   "options": {},
   "attributes": {
-    "metaTitle": {
+    "tituloSeo": {
       "type": "string",
       "required": true
     },
-    "metaDescription": {
+    "descripcionSeo": {
       "type": "text",
       "required": true
     },
-    "shareImage": {
+    "imagenOpenGraph": {
       "type": "media",
       "multiple": false,
       "required": false,

@@ -5,10 +5,12 @@
   },
   "options": {},
   "attributes": {
-    "SectionHeader": {
-      "type": "string"
+    "encabezado": {
+      "type": "component",
+      "component": "shared.section-header",
+      "repeatable": false
     },
-    "RepeatableStatistic": {
+    "estadisticas": {
       "type": "component",
       "component": "shared.statistic",
       "repeatable": true

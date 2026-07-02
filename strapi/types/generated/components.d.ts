@@ -6,11 +6,21 @@ export interface SharedAbout extends Struct.ComponentSchema {
     displayName: 'About';
   };
   attributes: {
-    button: Schema.Attribute.Component<'shared.button', false>;
-    Description: Schema.Attribute.Blocks;
-    Image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
-    SectionHeader: Schema.Attribute.String;
-    Title: Schema.Attribute.String;
+    boton: Schema.Attribute.Component<'shared.button', false>;
+    encabezado: Schema.Attribute.Component<'shared.section-header', false>;
+    imagen: Schema.Attribute.Media<'images'>;
+  };
+}
+
+export interface SharedBenefit extends Struct.ComponentSchema {
+  collectionName: 'components_shared_benefits';
+  info: {
+    displayName: 'Benefit';
+  };
+  attributes: {
+    descripcion: Schema.Attribute.Text;
+    icono: Schema.Attribute.String;
+    titulo: Schema.Attribute.String;
   };
 }
 
@@ -20,7 +30,8 @@ export interface SharedButton extends Struct.ComponentSchema {
     displayName: 'Button';
   };
   attributes: {
-    openInNewTab: Schema.Attribute.Boolean;
+    abrirEnNuevaPestana: Schema.Attribute.Boolean &
+      Schema.Attribute.DefaultTo<false>;
     texto: Schema.Attribute.String;
     url: Schema.Attribute.String;
   };
@@ -32,9 +43,11 @@ export interface SharedCta extends Struct.ComponentSchema {
     displayName: 'CTA';
   };
   attributes: {
-    button: Schema.Attribute.Component<'shared.button', true>;
-    description: Schema.Attribute.Text;
-    title: Schema.Attribute.String;
+    beneficios: Schema.Attribute.Component<'shared.benefit', true>;
+    boton: Schema.Attribute.Component<'shared.button', false>;
+    descripcion: Schema.Attribute.Text;
+    imagenFondo: Schema.Attribute.Media<'images'>;
+    titulo: Schema.Attribute.String;
   };
 }
 
@@ -44,10 +57,7 @@ export interface SharedGallery extends Struct.ComponentSchema {
     displayName: 'Gallery';
   };
   attributes: {
-    Media: Schema.Attribute.Media<
-      'images' | 'files' | 'videos' | 'audios',
-      true
-    >;
+    imagenes: Schema.Attribute.Media<'images', true>;
   };
 }
 
@@ -58,13 +68,12 @@ export interface SharedHero extends Struct.ComponentSchema {
     icon: 'book';
   };
   attributes: {
-    alignment: Schema.Attribute.Enumeration<['left', 'center', 'right']>;
-    backgroundImage: Schema.Attribute.Media<
-      'images' | 'files' | 'videos' | 'audios'
-    >;
-    button: Schema.Attribute.Component<'shared.button', false>;
-    subtitle: Schema.Attribute.Text;
-    title: Schema.Attribute.String;
+    botonPrincipal: Schema.Attribute.Component<'shared.button', false>;
+    botonSecundario: Schema.Attribute.Component<'shared.button', false>;
+    imagenFondo: Schema.Attribute.Media<'images'>;
+    subtitulo: Schema.Attribute.Text;
+    textoSuperior: Schema.Attribute.String;
+    titulo: Schema.Attribute.String;
   };
 }
 
@@ -76,7 +85,19 @@ export interface SharedRichText extends Struct.ComponentSchema {
     icon: 'align-justify';
   };
   attributes: {
-    body: Schema.Attribute.RichText;
+    contenido: Schema.Attribute.Blocks;
+  };
+}
+
+export interface SharedSectionHeader extends Struct.ComponentSchema {
+  collectionName: 'components_shared_section_headers';
+  info: {
+    displayName: 'Section Header';
+  };
+  attributes: {
+    descripcion: Schema.Attribute.Text;
+    textoSuperior: Schema.Attribute.String;
+    titulo: Schema.Attribute.String;
   };
 }
 
@@ -89,21 +110,21 @@ export interface SharedSeo extends Struct.ComponentSchema {
     name: 'Seo';
   };
   attributes: {
-    metaDescription: Schema.Attribute.Text & Schema.Attribute.Required;
-    metaTitle: Schema.Attribute.String & Schema.Attribute.Required;
-    shareImage: Schema.Attribute.Media<'images'>;
+    descripcionSeo: Schema.Attribute.Text & Schema.Attribute.Required;
+    imagenOpenGraph: Schema.Attribute.Media<'images'>;
+    tituloSeo: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
 
 export interface SharedServicesShowcase extends Struct.ComponentSchema {
   collectionName: 'components_shared_services_showcases';
   info: {
-    displayName: 'Section Header';
+    displayName: 'Vitrina de Secci\u00F3n';
   };
   attributes: {
-    ShowAll: Schema.Attribute.Component<'shared.button', false>;
-    Subtitle: Schema.Attribute.String;
-    Title: Schema.Attribute.String;
+    botonVerTodos: Schema.Attribute.Component<'shared.button', false>;
+    subtitulo: Schema.Attribute.String;
+    titulo: Schema.Attribute.String;
   };
 }
 
@@ -113,9 +134,9 @@ export interface SharedStatistic extends Struct.ComponentSchema {
     displayName: 'Statistic';
   };
   attributes: {
-    icon: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
-    label: Schema.Attribute.String;
-    value: Schema.Attribute.String;
+    etiqueta: Schema.Attribute.String;
+    icono: Schema.Attribute.String;
+    valor: Schema.Attribute.String;
   };
 }
 
@@ -125,8 +146,20 @@ export interface SharedStatisticsSeccion extends Struct.ComponentSchema {
     displayName: 'Statistics Seccion';
   };
   attributes: {
-    RepeatableStatistic: Schema.Attribute.Component<'shared.statistic', true>;
-    SectionHeader: Schema.Attribute.String;
+    encabezado: Schema.Attribute.Component<'shared.section-header', false>;
+    estadisticas: Schema.Attribute.Component<'shared.statistic', true>;
+  };
+}
+
+export interface SharedTrustBarItem extends Struct.ComponentSchema {
+  collectionName: 'components_shared_trust_bar_items';
+  info: {
+    displayName: 'Trust Bar Item';
+  };
+  attributes: {
+    descripcion: Schema.Attribute.Text;
+    icono: Schema.Attribute.String;
+    titulo: Schema.Attribute.String;
   };
 }
 
@@ -134,15 +167,18 @@ declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
       'shared.about': SharedAbout;
+      'shared.benefit': SharedBenefit;
       'shared.button': SharedButton;
       'shared.cta': SharedCta;
       'shared.gallery': SharedGallery;
       'shared.hero': SharedHero;
       'shared.rich-text': SharedRichText;
+      'shared.section-header': SharedSectionHeader;
       'shared.seo': SharedSeo;
       'shared.services-showcase': SharedServicesShowcase;
       'shared.statistic': SharedStatistic;
       'shared.statistics-seccion': SharedStatisticsSeccion;
+      'shared.trust-bar-item': SharedTrustBarItem;
     }
   }
 }

@@ -5,21 +5,14 @@
   },
   "options": {},
   "attributes": {
-    "label": {
+    "valor": {
       "type": "string"
     },
-    "value": {
+    "etiqueta": {
       "type": "string"
     },
-    "icon": {
-      "type": "media",
-      "multiple": false,
-      "allowedTypes": [
-        "images",
-        "files",
-        "videos",
-        "audios"
-      ]
+    "icono": {
+      "type": "string"
     }
   },
   "config": {}

@@ -11,8 +11,9 @@
     "url": {
       "type": "string"
     },
-    "openInNewTab": {
-      "type": "boolean"
+    "abrirEnNuevaPestana": {
+      "type": "boolean",
+      "default": false
     }
   },
   "config": {}

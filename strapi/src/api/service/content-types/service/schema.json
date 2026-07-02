@@ -4,57 +4,48 @@
   "info": {
     "singularName": "service",
     "pluralName": "services",
-    "displayName": "Service"
+    "displayName": "Servicio"
   },
   "options": {
     "draftAndPublish": true
   },
   "pluginOptions": {},
   "attributes": {
-    "title": {
-      "type": "string"
+    "nombre": {
+      "type": "string",
+      "required": true
     },
     "slug": {
       "type": "uid",
-      "targetField": "title"
+      "targetField": "nombre"
     },
-    "shortDescription": {
+    "descripcionCorta": {
       "type": "string"
     },
-    "content": {
+    "descripcionCompleta": {
       "type": "blocks"
     },
-    "coverlmage": {
+    "imagenPrincipal": {
       "type": "media",
       "multiple": false,
       "allowedTypes": [
-        "images",
-        "files",
-        "videos",
-        "audios"
+        "images"
       ]
     },
-    "icon": {
-      "type": "media",
-      "multiple": false,
-      "allowedTypes": [
-        "images",
-        "files",
-        "videos",
-        "audios"
-      ]
+    "icono": {
+      "type": "string"
     },
-    "order": {
+    "orden": {
       "type": "integer"
     },
-    "featured": {
-      "type": "boolean"
+    "destacado": {
+      "type": "boolean",
+      "default": false
     },
-    "service": {
-      "type": "relation",
-      "relation": "manyToMany",
-      "target": "api::project.project",
-      "mappedBy": "services"
+    "seo": {
+      "type": "component",
+      "component": "shared.seo",
+      "repeatable": false
     }
   }
 }

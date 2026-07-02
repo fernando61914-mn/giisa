@@ -1,113 +1,125 @@
 ---
+import { Image } from "astro:assets";
+import type { ComponenteHero } from "../lib/types/shared";
+import { strapiImageUrl } from "../lib/strapi";
 import { brand } from "../config/brand";
 
 const PLACEHOLDER =
-  "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1200&q=80";
+  "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1400&q=80";
 
 interface Props {
-  topper?: string;
-  heading?: string;
-  description?: string;
-
-  ctaLabel?: string;
-  ctaHref?: string;
-
-  secondaryLabel?: string;
-  secondaryHref?: string;
-
-  imageSrc?: string;
-  imageAlt?: string;
-
-  phone?: string;
-  phoneLabel?: string;
+  data?: ComponenteHero;
 }
 
-const {
-  topper = "Licensed & Insured",
+const { data } = Astro.props;
 
-  heading = brand.tagline,
-  description = brand.description,
-
-  ctaLabel = "Get a Free Quote",
-  ctaHref = "/contact",
-
-  secondaryLabel = "Our Services",
-  secondaryHref = "/services",
-
-  imageSrc = PLACEHOLDER,
-  imageAlt = "Professional tradesperson at work",
-
-  phone,
-  phoneLabel = "Call us",
-} = Astro.props;
+const textoSuperior = data?.textoSuperior ?? "Infraestructura de calidad";
+const titulo =
+  data?.titulo ?? "Construimos infraestructura que transforma comunidades";
+const subtitulo =
+  data?.subtitulo ??
+  "Más de 15 años de experiencia en construcción, supervisión e infraestructura con los más altos estándares de calidad y seguridad.";
+const botonPrincipal = data?.botonPrincipal ?? {
+  texto: "Cotiza tu proyecto",
+  url: "/contact",
+};
+const botonSecundario = data?.botonSecundario ?? {
+  texto: "Conoce nuestros servicios",
+  url: "/services",
+};
 ---
 
-<section
-  class="relative overflow-hidden bg-background py-12 sm:py-16 md:py-20 lg:py-24"
->
+<section class="relative min-h-[85vh] flex items-center overflow-hidden">
+  <!-- Imagen de fondo: usa <Image> de Astro si viene de Strapi (optimiza a WebP en build),
+       o <img> normal para el placeholder de Unsplash en desarrollo -->
+  {
+    data?.imagenFondo ? (
+      <Image
+        src={strapiImageUrl(data.imagenFondo.url)}
+        alt={data.imagenFondo.alternativeText ?? brand.name}
+        width={data.imagenFondo.width ?? 1400}
+        height={data.imagenFondo.height ?? 900}
+        class="absolute inset-0 size-full object-cover"
+        loading="eager"
+        transition:name="hero-image"
+      />
+    ) : (
+      <img
+        src={PLACEHOLDER}
+        alt={brand.name}
+        class="absolute inset-0 size-full object-cover"
+        loading="eager"
+        transition:name="hero-image"
+      />
+    )
+  }
+
+  <!-- Overlay degradado -->
   <div
-    class="mx-auto grid max-w-site grid-cols-1 items-center gap-8 px-4 sm:px-6 lg:grid-cols-2 lg:gap-12"
+    class="absolute inset-0 bg-linear-to-r from-dark/90 via-dark/70 to-dark/30"
   >
-    <div class="order-2 space-y-5 lg:order-1 lg:space-y-6">
+  </div>
+
+  <!-- Contenido -->
+  <div class="relative mx-auto max-w-site w-full px-4 py-20 sm:px-6 sm:py-28">
+    <div class="max-w-2xl space-y-6">
+      <!-- Badge superior -->
       {
-        topper && (
-          <span class="inline-block rounded-full bg-accent/10 px-4 py-1.5 text-topper font-bold uppercase tracking-widest text-accent">
-            {topper}
+        textoSuperior && (
+          <span
+            data-hero-item
+            class="inline-block rounded-full bg-accent/20 border border-accent/40 px-4 py-1.5 text-topper font-bold uppercase tracking-widest text-accent"
+          >
+            {textoSuperior}
           </span>
         )
       }
 
+      <!-- Título -->
       <h1
-        class="font-heading text-display font-bold uppercase leading-none tracking-tight text-text"
+        data-hero-item
+        class="font-heading text-display font-bold leading-tight text-white"
         transition:name="hero-heading"
       >
-        {heading}
+        {titulo}
       </h1>
 
-      <p class="max-w-lg text-lead text-text-muted leading-relaxed">
-        {description}
-      </p>
+      <!-- Subtítulo -->
+      {
+        subtitulo && (
+          <p
+            data-hero-item
+            class="text-lead text-white/80 leading-relaxed max-w-xl"
+          >
+            {subtitulo}
+          </p>
+        )
+      }
 
+      <!-- Botones -->
       <div
+        data-hero-item
         class="flex flex-col gap-3 pt-2 sm:flex-row sm:items-center sm:gap-4"
       >
         <a
-          href={ctaHref}
-          class="inline-flex min-h-[44px] items-center justify-center rounded-md bg-accent px-6 py-3 text-base font-bold text-accent-fg shadow-sm transition-opacity hover:opacity-90"
+          href={botonPrincipal.url}
+          class="inline-flex min-h-12 items-center justify-center rounded-md bg-accent px-7 py-3 text-base font-bold text-dark shadow-md transition-opacity hover:opacity-90"
         >
-          {ctaLabel}
+          {botonPrincipal.texto}
         </a>
 
         <a
-          href={secondaryHref}
-          class="inline-flex min-h-[44px] items-center justify-center rounded-md border-2 border-primary px-6 py-3 text-base font-bold text-primary transition-colors hover:bg-primary hover:text-primary-fg"
+          href={botonSecundario.url}
+          class="inline-flex min-h-12 items-center justify-center rounded-md border-2 border-white/50 px-7 py-3 text-base font-bold text-white transition-colors hover:border-white hover:bg-white/10"
         >
-          {secondaryLabel}
+          {botonSecundario.texto}
         </a>
       </div>
-
-      {
-        phone && (
-          <a
-            href={`tel:${phone}`}
-            class="inline-flex items-center gap-2 pt-1 text-sm font-semibold text-text-muted hover:text-primary"
-          >
-            {phoneLabel}
-          </a>
-        )
-      }
-    </div>
-
-    <div
-      class="relative order-1 overflow-hidden rounded-lg shadow-xl aspect-4/3 lg:order-2"
-      transition:name="hero-image"
-    >
-      <img
-        src={imageSrc || PLACEHOLDER}
-        alt={imageAlt}
-        class="size-full object-cover"
-        loading="eager"
-      />
     </div>
   </div>
 </section>
+
+<script>
+  import { initHeroAnimation } from "../lib/animations/hero";
+  document.addEventListener("astro:page-load", initHeroAnimation);
+</script>

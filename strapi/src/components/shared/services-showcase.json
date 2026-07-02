@@ -1,17 +1,17 @@
 {
   "collectionName": "components_shared_services_showcases",
   "info": {
-    "displayName": "Section Header"
+    "displayName": "Vitrina de Sección"
   },
   "options": {},
   "attributes": {
-    "Title": {
+    "titulo": {
       "type": "string"
     },
-    "Subtitle": {
+    "subtitulo": {
       "type": "string"
     },
-    "ShowAll": {
+    "botonVerTodos": {
       "type": "component",
       "component": "shared.button",
       "repeatable": false

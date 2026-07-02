@@ -1,20 +1,48 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import Hero from "../components/Hero.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
+import Hero from "../components/Hero.astro";
+import TrustBar from "../components/TrustBar.astro";
+import About from "../components/About.astro";
+import Statistics from "../components/Statistics.astro";
+import Services from "../components/Services.astro";
+import Projects from "../components/Projects.astro";
+import CTA from "../components/CTA.astro";
 
 import { getHome } from "../lib/api/home";
 
-const home = await getHome();
+let home;
+try {
+  home = await getHome();
+} catch {
+  home = undefined;
+}
 ---
 
-<BaseLayout>
+<BaseLayout
+  title={home?.seo?.tituloSeo}
+  description={home?.seo?.descripcionSeo}
+>
   <Header slot="header" />
-  <Hero
-    heading={home.Hero.title}
-    description={home.Hero.subtitle}
-    imageSrc={`${import.meta.env.PUBLIC_STRAPI_URL}${home.Hero.backgroundImage.url}`}
-  />
+
+  <main>
+    <Hero data={home?.hero} />
+    <TrustBar items={home?.barraConfianza} />
+    <About data={home?.nosotros} />
+    <Statistics data={home?.estadisticas} />
+    <Services
+      encabezado={home?.encabezadoServicios}
+      servicios={home?.serviciosDestacados}
+      boton={home?.botonServicios}
+    />
+    <Projects
+      encabezado={home?.encabezadoProyectos}
+      proyectos={home?.proyectosDestacados}
+      boton={home?.botonProyectos}
+    />
+    <CTA data={home?.llamadoAccion} />
+  </main>
+
   <Footer slot="footer" />
 </BaseLayout>

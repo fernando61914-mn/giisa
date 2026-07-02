@@ -5,26 +5,19 @@
   },
   "options": {},
   "attributes": {
-    "SectionHeader": {
-      "type": "string"
+    "encabezado": {
+      "type": "component",
+      "component": "shared.section-header",
+      "repeatable": false
     },
-    "Title": {
-      "type": "string"
-    },
-    "Description": {
-      "type": "blocks"
-    },
-    "Image": {
+    "imagen": {
       "type": "media",
       "multiple": false,
       "allowedTypes": [
-        "images",
-        "files",
-        "videos",
-        "audios"
+        "images"
       ]
     },
-    "button": {
+    "boton": {
       "type": "component",
       "component": "shared.button",
       "repeatable": false

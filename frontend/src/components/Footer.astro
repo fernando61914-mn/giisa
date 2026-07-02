@@ -4,35 +4,30 @@ import { client } from "../data/client";
 
 const year = new Date().getFullYear();
 
-const navCols = [
-  {
-    title: "Company",
-    links: [
-      { label: "About", href: "/about" },
-      { label: "Services", href: "/services" },
-      { label: "Reviews", href: "/reviews" },
-      { label: "Blog", href: "/blog" },
-    ],
-  },
-  {
-    title: "Support",
-    links: [
-      { label: "Contact", href: "/contact" },
-      { label: "Privacy", href: "/privacy" },
-      { label: "Terms", href: "/terms" },
-    ],
-  },
+const navLinks = [
+  { label: "Inicio", href: "/" },
+  { label: "Nosotros", href: "/about" },
+  { label: "Servicios", href: "/services" },
+  { label: "Proyectos", href: "/projects" },
+  { label: "Blog", href: "/blog" },
+  { label: "Contacto", href: "/contact" },
+];
+
+const serviciosLinks = [
+  { label: "Construcción", href: "/services" },
+  { label: "Supervisión", href: "/services" },
+  { label: "Infraestructura", href: "/services" },
 ];
 ---
 
-<footer class="bg-dark text-surface/80" transition:persist>
-  <div class="mx-auto max-w-site px-4 py-12 sm:px-6 lg:py-16">
+<footer class="bg-dark text-white/70" transition:persist>
+  <div class="mx-auto max-w-site px-4 py-14 sm:px-6 lg:py-16">
     <div class="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4">
-      <!-- Brand -->
+      <!-- Marca -->
       <div class="sm:col-span-2 lg:col-span-1">
         <a
           href="/"
-          class="font-heading text-lg font-bold uppercase tracking-wide text-white"
+          class="font-heading text-xl font-bold uppercase tracking-wide text-white"
         >
           {brand.name}
         </a>
@@ -40,7 +35,7 @@ const navCols = [
           {brand.tagline}
         </p>
 
-        <!-- Social links -->
+        <!-- Redes sociales -->
         <div class="mt-5 flex items-center gap-4">
           {
             client.facebook && (
@@ -49,7 +44,7 @@ const navCols = [
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Facebook"
-                class="text-surface/60 transition-colors hover:text-white"
+                class="text-white/50 transition-colors hover:text-white"
               >
                 <svg
                   class="size-5"
@@ -69,7 +64,7 @@ const navCols = [
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Instagram"
-                class="text-surface/60 transition-colors hover:text-white"
+                class="text-white/50 transition-colors hover:text-white"
               >
                 <svg
                   class="size-5"
@@ -83,13 +78,13 @@ const navCols = [
             )
           }
           {
-            client.google && (
+            client.linkedin && (
               <a
-                href={client.google}
+                href={client.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Google Business"
-                class="text-surface/60 transition-colors hover:text-white"
+                aria-label="LinkedIn"
+                class="text-white/50 transition-colors hover:text-white"
               >
                 <svg
                   class="size-5"
@@ -97,7 +92,7 @@ const navCols = [
                   viewBox="0 0 24 24"
                   aria-hidden="true"
                 >
-                  <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 010-5 2.5 2.5 0 010 5z" />
+                  <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
                 </svg>
               </a>
             )
@@ -105,35 +100,54 @@ const navCols = [
         </div>
       </div>
 
-      <!-- Nav columns -->
-      {
-        navCols.map((col) => (
-          <div>
-            <h3 class="text-sm font-bold uppercase tracking-wider text-white">
-              {col.title}
-            </h3>
-            <ul class="mt-3 space-y-2">
-              {col.links.map(({ label, href }) => (
-                <li>
-                  <a
-                    href={href}
-                    class="text-sm transition-colors hover:text-white"
-                  >
-                    {label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))
-      }
-
-      <!-- Contact info -->
+      <!-- Navegación -->
       <div>
         <h3 class="text-sm font-bold uppercase tracking-wider text-white">
-          Contact
+          Navegación
         </h3>
-        <ul class="mt-3 space-y-2 text-sm">
+        <ul class="mt-4 space-y-2">
+          {
+            navLinks.map(({ label, href }) => (
+              <li>
+                <a
+                  href={href}
+                  class="text-sm transition-colors hover:text-white"
+                >
+                  {label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <!-- Servicios -->
+      <div>
+        <h3 class="text-sm font-bold uppercase tracking-wider text-white">
+          Servicios
+        </h3>
+        <ul class="mt-4 space-y-2">
+          {
+            serviciosLinks.map(({ label, href }) => (
+              <li>
+                <a
+                  href={href}
+                  class="text-sm transition-colors hover:text-white"
+                >
+                  {label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <!-- Contacto -->
+      <div>
+        <h3 class="text-sm font-bold uppercase tracking-wider text-white">
+          Contacto
+        </h3>
+        <ul class="mt-4 space-y-3 text-sm">
           <li>
             <a
               href={`tel:${client.phoneForTel}`}
@@ -150,24 +164,24 @@ const navCols = [
               {client.email}
             </a>
           </li>
-          <li>
-            <a
-              href={client.mapLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              class="transition-colors hover:text-white"
-            >
-              {client.address}<br />
-            </a>
-          </li>
+          <li class="text-white/50">{client.address}</li>
         </ul>
       </div>
     </div>
 
     <!-- Copyright -->
-    <div class="mt-10 border-t border-surface/10 pt-6 text-center text-sm">
-      &copy; {year}
-      {brand.name}. All rights reserved.
+    <div
+      class="mt-12 border-t border-white/10 pt-6 flex flex-col items-center justify-between gap-4 text-sm sm:flex-row"
+    >
+      <p>&copy; {year} {brand.name}. Todos los derechos reservados.</p>
+      <div class="flex gap-5">
+        <a href="/privacy" class="transition-colors hover:text-white"
+          >Aviso de privacidad</a
+        >
+        <a href="/terms" class="transition-colors hover:text-white"
+          >Términos y condiciones</a
+        >
+      </div>
     </div>
   </div>
 </footer>
