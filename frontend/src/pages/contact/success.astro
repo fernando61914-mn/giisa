@@ -1,28 +1,44 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import Header from '../../components/Header.astro';
-import Footer from '../../components/Footer.astro';
-import { client } from '../../data/client';
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import { client } from "../../data/client";
 ---
 
-<BaseLayout title="Mensaje enviado — GIISA" description="Hemos recibido tu mensaje. Te contactaremos en menos de 24 horas.">
+<BaseLayout
+  title="Mensaje enviado — GIISA"
+  description="Hemos recibido tu mensaje. Te contactaremos en menos de 24 horas."
+>
   <Header slot="header" />
 
   <main>
     <!-- Hero de confirmación -->
     <div class="bg-dark py-16 text-center">
-      <p class="text-topper font-bold uppercase tracking-widest text-accent">Formulario de contacto</p>
+      <p class="text-topper font-bold uppercase tracking-widest text-accent">
+        Formulario de contacto
+      </p>
       <h1 class="mt-2 font-heading text-h1 font-bold text-white">Cotización</h1>
     </div>
 
     <!-- Contenido principal -->
     <section class="py-section">
       <div class="mx-auto max-w-2xl px-4 sm:px-6 text-center">
-
         <!-- Ícono de éxito -->
-        <div class="mx-auto mb-8 flex size-20 items-center justify-center rounded-full bg-accent/10 ring-8 ring-accent/5">
-          <svg class="size-10 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" />
+        <div
+          class="mx-auto mb-8 flex size-20 items-center justify-center rounded-full bg-accent/10 ring-8 ring-accent/5"
+        >
+          <svg
+            class="size-10 text-accent"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2.5"
+              d="M5 13l4 4L19 7"></path>
           </svg>
         </div>
 
@@ -31,7 +47,10 @@ import { client } from '../../data/client';
           ¡Solicitud recibida!
         </h2>
         <p class="mt-4 text-lg text-text-muted leading-relaxed">
-          Gracias por contactarnos. Un especialista de GIISA revisará tu solicitud y se pondrá en contacto contigo en un plazo de <strong class="text-text font-semibold">menos de 24 horas hábiles</strong>.
+          Gracias por contactarnos. Un especialista de GIISA revisará tu
+          solicitud y se pondrá en contacto contigo en un plazo de <strong
+            class="text-text font-semibold">menos de 24 horas hábiles</strong
+          >.
         </p>
 
         <!-- Separador -->
@@ -39,27 +58,36 @@ import { client } from '../../data/client';
 
         <!-- Qué sigue -->
         <div class="rounded-xl bg-surface p-6 text-left">
-          <h3 class="font-heading text-base font-bold text-text mb-4">¿Qué sigue?</h3>
+          <h3 class="font-heading text-base font-bold text-text mb-4">
+            ¿Qué sigue?
+          </h3>
           <ol class="space-y-3">
-            {[
-              "Nuestro equipo revisará los detalles de tu proyecto.",
-              "Te contactaremos para agendar una llamada de diagnóstico sin costo.",
-              "Recibirás una propuesta técnica y económica personalizada.",
-            ].map((step, i) => (
-              <li class="flex items-start gap-3">
-                <span class="flex size-6 shrink-0 items-center justify-center rounded-full bg-primary text-xs font-bold text-white">
-                  {i + 1}
-                </span>
-                <span class="text-text-muted text-sm leading-relaxed">{step}</span>
-              </li>
-            ))}
+            {
+              [
+                "Nuestro equipo revisará los detalles de tu proyecto.",
+                "Te contactaremos para agendar una llamada de diagnóstico sin costo.",
+                "Recibirás una propuesta técnica y económica personalizada.",
+              ].map((step, i) => (
+                <li class="flex items-start gap-3">
+                  <span class="flex size-6 shrink-0 items-center justify-center rounded-full bg-primary text-xs font-bold text-white">
+                    {i + 1}
+                  </span>
+                  <span class="text-text-muted text-sm leading-relaxed">
+                    {step}
+                  </span>
+                </li>
+              ))
+            }
           </ol>
         </div>
 
         <!-- Contacto directo -->
         <p class="mt-6 text-sm text-text-muted">
           ¿Necesitas atención inmediata? Llámanos directamente:
-          <a href={`tel:${client.phoneForTel}`} class="font-semibold text-primary hover:text-accent transition-colors">
+          <a
+            href={`tel:${client.phoneForTel}`}
+            class="font-semibold text-primary hover:text-accent transition-colors"
+          >
             {client.phoneFormatted}
           </a>
         </p>
@@ -79,11 +107,9 @@ import { client } from '../../data/client';
             Ver nuestros servicios
           </a>
         </div>
-
       </div>
     </section>
   </main>
 
   <Footer slot="footer" />
 </BaseLayout>
-

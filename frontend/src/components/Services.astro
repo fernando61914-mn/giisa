@@ -1,21 +1,26 @@
 ---
-import type { EncabezadoSeccion, Boton } from '../lib/types/shared';
+import type { EncabezadoSeccion } from '../lib/types/shared';
 import type { Servicio } from '../lib/types/service';
 import { strapiImageUrl } from '../lib/strapi';
 
 interface Props {
   encabezado?: EncabezadoSeccion;
   servicios?: Servicio[];
-  boton?: Boton;
+  boton?: { texto: string; url: string };
 }
 
-const { encabezado, servicios = [], boton } = Astro.props;
+const { encabezado, servicios = [] } = Astro.props;
 
 const textoSuperior = encabezado?.textoSuperior ?? 'Lo que hacemos';
 const titulo        = encabezado?.titulo        ?? 'Nuestros Servicios';
 const descripcion   = encabezado?.descripcion   ?? 'Soluciones integrales en construcción, supervisión e infraestructura para proyectos de cualquier escala.';
 
 const PLACEHOLDER_IMG = 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600&q=70';
+
+// Máximo 6 servicios; los primeros 3 visibles, el resto expandible
+const items = servicios.slice(0, 6);
+const visibles = items.slice(0, 3);
+const ocultos  = items.slice(3);
 ---
 
 <section id="servicios" class="bg-surface py-section">
@@ -28,79 +33,109 @@ const PLACEHOLDER_IMG = 'https://images.unsplash.com/photo-1504307651254-35680f3
       {descripcion && <p class="mt-3 text-text-muted leading-relaxed">{descripcion}</p>}
     </div>
 
-    <!-- Cards de servicios -->
-    {servicios.length > 0 ? (
-      <ul class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3" role="list">
-        {servicios.map((s) => {
-          const imgSrc = s.imagenPrincipal ? strapiImageUrl(s.imagenPrincipal.url) : PLACEHOLDER_IMG;
-          return (
-            <li>
-              <a
-                href={`/services/${s.slug}`}
-                class="group flex h-full flex-col overflow-hidden rounded-xl border border-border bg-background shadow-sm transition-shadow hover:shadow-md"
-              >
-                <div class="aspect-video overflow-hidden">
-                  <img
-                    src={imgSrc}
-                    alt={s.imagenPrincipal?.alternativeText ?? s.nombre}
-                    width={480}
-                    height={270}
-                    loading="lazy"
-                    decoding="async"
-                    class="size-full object-cover transition-transform duration-300 group-hover:scale-105"
-                  />
-                </div>
-                <div class="flex flex-1 flex-col p-5">
-                  <h3 class="font-heading text-h3 font-semibold text-text">{s.nombre}</h3>
-                  {s.descripcionCorta && (
-                    <p class="mt-2 flex-1 text-sm leading-relaxed text-text-muted">{s.descripcionCorta}</p>
-                  )}
-                  <span class="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-primary transition-colors group-hover:text-accent">
-                    Ver más
-                    <svg class="size-4 transition-transform group-hover:translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                    </svg>
-                  </span>
-                </div>
-              </a>
-            </li>
-          );
-        })}
-      </ul>
-    ) : (
-      <!-- Fallback estático -->
-      <ul class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3" role="list">
-        {[
-          { nombre: 'Construcción',   descripcion: 'Ejecución de obras civiles e industriales con altos estándares de calidad y seguridad.' },
-          { nombre: 'Supervisión',    descripcion: 'Control y seguimiento técnico de proyectos para garantizar el cumplimiento de especificaciones.' },
-          { nombre: 'Infraestructura',descripcion: 'Desarrollo de infraestructura vial, hidráulica y urbana para comunidades y sectores productivos.' },
-        ].map((s) => (
+    <!-- Grid de servicios -->
+    <ul id="servicios-lista" data-reveal-stagger class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3" role="list">
+
+      <!-- Siempre visibles (primeros 3) -->
+      {visibles.map((s) => {
+        const imgSrc = s.imagenPrincipal ? strapiImageUrl(s.imagenPrincipal.url) : PLACEHOLDER_IMG;
+        return (
           <li>
             <div class="flex h-full flex-col overflow-hidden rounded-xl border border-border bg-background shadow-sm">
-              <div class="aspect-video overflow-hidden bg-surface">
-                <img src={PLACEHOLDER_IMG} alt={s.nombre} width={480} height={270} loading="lazy" class="size-full object-cover opacity-60" />
+              <div class="aspect-video overflow-hidden">
+                <img
+                  src={imgSrc}
+                  alt={s.imagenPrincipal?.alternativeText ?? s.nombre}
+                  width={480}
+                  height={270}
+                  loading="lazy"
+                  decoding="async"
+                  class="size-full object-cover"
+                />
               </div>
               <div class="flex flex-1 flex-col p-5">
                 <h3 class="font-heading text-h3 font-semibold text-text">{s.nombre}</h3>
-                <p class="mt-2 flex-1 text-sm leading-relaxed text-text-muted">{s.descripcion}</p>
+                {s.descripcionCorta && (
+                  <p class="mt-2 flex-1 text-sm leading-relaxed text-text-muted">{s.descripcionCorta}</p>
+                )}
               </div>
             </div>
           </li>
-        ))}
-      </ul>
-    )}
+        );
+      })}
 
-    <!-- Botón ver todos -->
-    {boton && (
+      <!-- Ocultos inicialmente (servicios 4-6) -->
+      {ocultos.map((s) => {
+        const imgSrc = s.imagenPrincipal ? strapiImageUrl(s.imagenPrincipal.url) : PLACEHOLDER_IMG;
+        return (
+          <li class="servicio-extra hidden">
+            <div class="flex h-full flex-col overflow-hidden rounded-xl border border-border bg-background shadow-sm">
+              <div class="aspect-video overflow-hidden">
+                <img
+                  src={imgSrc}
+                  alt={s.imagenPrincipal?.alternativeText ?? s.nombre}
+                  width={480}
+                  height={270}
+                  loading="lazy"
+                  decoding="async"
+                  class="size-full object-cover"
+                />
+              </div>
+              <div class="flex flex-1 flex-col p-5">
+                <h3 class="font-heading text-h3 font-semibold text-text">{s.nombre}</h3>
+                {s.descripcionCorta && (
+                  <p class="mt-2 flex-1 text-sm leading-relaxed text-text-muted">{s.descripcionCorta}</p>
+                )}
+              </div>
+            </div>
+          </li>
+        );
+      })}
+    </ul>
+
+    <!-- Botón expandir/colapsar (solo si hay más de 3) -->
+    {ocultos.length > 0 && (
       <div class="mt-10 text-center">
-        <a
-          href={boton.url}
+        <button
+          id="btn-ver-servicios"
+          type="button"
           class="inline-flex min-h-11 items-center gap-2 rounded-md border-2 border-primary px-7 py-3 text-base font-bold text-primary transition-colors hover:bg-primary hover:text-primary-fg"
+          aria-expanded="false"
         >
-          {boton.texto}
-        </a>
+          <span id="btn-servicios-texto">Ver todos los servicios</span>
+          <svg
+            id="btn-servicios-icono"
+            class="size-4 transition-transform duration-300"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+          >
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+          </svg>
+        </button>
       </div>
     )}
   </div>
 </section>
+
+<script>
+  document.addEventListener('astro:page-load', () => {
+    const btn = document.getElementById('btn-ver-servicios');
+    if (!btn) return;
+
+    const extras = document.querySelectorAll('.servicio-extra');
+    const texto  = document.getElementById('btn-servicios-texto');
+    const icono  = document.getElementById('btn-servicios-icono');
+    let expandido = false;
+
+    btn.addEventListener('click', () => {
+      expandido = !expandido;
+      extras.forEach((el) => el.classList.toggle('hidden', !expandido));
+      if (texto) texto.textContent = expandido ? 'Ver menos' : 'Ver todos los servicios';
+      if (icono) icono.style.transform = expandido ? 'rotate(180deg)' : '';
+      btn.setAttribute('aria-expanded', String(expandido));
+    });
+  });
+</script>
 
