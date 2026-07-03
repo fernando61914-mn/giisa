@@ -11,11 +11,44 @@ import Projects from "../components/Projects.astro";
 import CTA from "../components/CTA.astro";
 
 import * as homeData from "../data/home";
+import { brand } from "../config/brand";
+import { client } from "../data/client";
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'GeneralContractor',
+  name: brand.name,
+  alternateName: 'GIISA',
+  description: brand.description,
+  url: brand.url,
+  telephone: client.phone,
+  email: client.email,
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Ciudad de México',
+    addressRegion: 'CDMX',
+    addressCountry: 'MX',
+  },
+  areaServed: {
+    '@type': 'Country',
+    name: 'México',
+  },
+  serviceType: [
+    'Construcción civil',
+    'Supervisión de obras',
+    'Infraestructura vial e hidráulica',
+    'Naves industriales',
+  ],
+  knowsAbout: ['Construcción', 'Ingeniería civil', 'Supervisión de obra', 'Infraestructura'],
+  logo: `${brand.url}/logo.png`,
+  image: `${brand.url}/og-image.svg`,
+};
 ---
 
 <BaseLayout
   title={`${homeData.hero.titulo} — GIISA`}
   description={homeData.nosotros.encabezado?.descripcion}
+  schema={schema}
 >
   <Header slot="header" />
 
