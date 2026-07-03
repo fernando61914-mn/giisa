@@ -9,7 +9,7 @@ export const client = {
 
   email: "contacto@giisa.com",
 
-  address: "Ciudad de México, México",
+  address: "Calle 57 No. 91 Int. 4, Col. Puebla, CP. 15020, V. Carranza, CDMX",
 
   // ── Redes sociales ────────────────────────────────────────────────────────
   facebook: "#",

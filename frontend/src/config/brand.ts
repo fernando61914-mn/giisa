@@ -10,7 +10,7 @@ export const brand = {
   name: 'Grupo de Infraestructura Integral',
   tagline: 'Construcción y Supervisión de Proyectos.',
   description:
-    'Grupo de Infraestructura Integral es una empresa especializada en construcción, supervisión e infraestructura, ofreciendo soluciones integrales con altos estándares de calidad, seguridad y cumplimiento.',
+    'GIISA — Grupo de Infraestructura Integral, S.A. de C.V. Empresa mexicana especializada en construcción, supervisión e infraestructura. Desarrollamos soluciones integrales de ingeniería para proyectos de infraestructura, edificación, naves industriales y supervisión especializada.',
   url: 'https://grupogii.com',
   locale: 'es_MX',
 

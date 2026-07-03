@@ -61,41 +61,71 @@ const appsScriptUrl = import.meta.env.PUBLIC_APPS_SCRIPT_URL ?? "";
               </label>
             </p>
 
-            <label class="flex flex-col gap-1.5">
-              <span class="text-sm font-medium text-text">
-                Nombre <span class="text-accent" aria-hidden="true">*</span>
-              </span>
-              <input
-                type="text"
-                name="name"
-                required
-                autocomplete="name"
-                class="rounded-md border border-border bg-background px-4 py-2.5 text-text shadow-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
-              />
-            </label>
+            <div class="grid grid-cols-1 gap-5 sm:grid-cols-2">
+              <label class="flex flex-col gap-1.5">
+                <span class="text-sm font-medium text-text">
+                  Nombre <span class="text-accent" aria-hidden="true">*</span>
+                </span>
+                <input
+                  type="text"
+                  name="name"
+                  required
+                  autocomplete="name"
+                  class="rounded-md border border-border bg-background px-4 py-2.5 text-text shadow-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+                />
+              </label>
+
+              <label class="flex flex-col gap-1.5">
+                <span class="text-sm font-medium text-text">Empresa</span>
+                <input
+                  type="text"
+                  name="company"
+                  autocomplete="organization"
+                  class="rounded-md border border-border bg-background px-4 py-2.5 text-text shadow-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+                />
+              </label>
+            </div>
+
+            <div class="grid grid-cols-1 gap-5 sm:grid-cols-2">
+              <label class="flex flex-col gap-1.5">
+                <span class="text-sm font-medium text-text">
+                  Correo electrónico
+                  <span class="text-accent" aria-hidden="true">*</span>
+                </span>
+                <input
+                  type="email"
+                  name="email"
+                  required
+                  autocomplete="email"
+                  class="rounded-md border border-border bg-background px-4 py-2.5 text-text shadow-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+                />
+              </label>
+
+              <label class="flex flex-col gap-1.5">
+                <span class="text-sm font-medium text-text">Teléfono</span>
+                <input
+                  type="tel"
+                  name="phone"
+                  autocomplete="tel"
+                  class="rounded-md border border-border bg-background px-4 py-2.5 text-text shadow-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+                />
+              </label>
+            </div>
 
             <label class="flex flex-col gap-1.5">
-              <span class="text-sm font-medium text-text">
-                Correo electrónico
-                <span class="text-accent" aria-hidden="true">*</span>
-              </span>
-              <input
-                type="email"
-                name="email"
-                required
-                autocomplete="email"
+              <span class="text-sm font-medium text-text">Tipo de proyecto</span>
+              <select
+                name="projectType"
                 class="rounded-md border border-border bg-background px-4 py-2.5 text-text shadow-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
-              />
-            </label>
-
-            <label class="flex flex-col gap-1.5">
-              <span class="text-sm font-medium text-text">Teléfono</span>
-              <input
-                type="tel"
-                name="phone"
-                autocomplete="tel"
-                class="rounded-md border border-border bg-background px-4 py-2.5 text-text shadow-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
-              />
+              >
+                <option value="">Selecciona una opción</option>
+                <option value="Obra Civil">Obra Civil</option>
+                <option value="Edificación">Edificación</option>
+                <option value="Nave Industrial">Nave Industrial</option>
+                <option value="Supervisión de Obra">Supervisión de Obra</option>
+                <option value="Mantenimiento Integral">Mantenimiento Integral</option>
+                <option value="Otro">Otro</option>
+              </select>
             </label>
 
             <label class="flex flex-col gap-1.5">
@@ -262,8 +292,10 @@ const appsScriptUrl = import.meta.env.PUBLIC_APPS_SCRIPT_URL ?? "";
 
       const data = {
         name: form.querySelector('[name="name"]').value,
+        company: form.querySelector('[name="company"]').value,
         email: form.querySelector('[name="email"]').value,
         phone: form.querySelector('[name="phone"]').value,
+        projectType: form.querySelector('[name="projectType"]').value,
         message: form.querySelector('[name="message"]').value,
         timestamp: new Date().toLocaleString("es-MX"),
       };

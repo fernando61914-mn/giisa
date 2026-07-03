@@ -21,9 +21,9 @@ import type { Proyecto } from '../lib/types/project';
 
 export const hero: ComponenteHero = {
   textoSuperior: 'PROYECTO • CONSTRUCCIÓN • SUPERVISIÓN',
-  titulo: 'Construimos infraestructura que transforma comunidades',
+  titulo: 'Desarrollamos soluciones integrales de ingeniería y construcción',
   subtitulo:
-    'Más de 15 años de experiencia en construcción, supervisión e infraestructura con los más altos estándares de calidad y seguridad.',
+    'Para proyectos de infraestructura, edificación, naves industriales y supervisión especializada, garantizando calidad, seguridad y cumplimiento.',
   botonPrincipal: { texto: 'Cotiza tu proyecto', url: '/contact' },
   botonSecundario: { texto: 'Nuestros servicios', url: '/#servicios' },
 };
@@ -33,23 +33,23 @@ export const hero: ComponenteHero = {
 export const barraConfianza: TrustBarItem[] = [
   {
     icono: 'escudo',
-    titulo: 'Calidad garantizada',
-    descripcion: 'Materiales y procesos con los más altos estándares.',
+    titulo: 'Calidad certificada',
+    descripcion: 'Control de calidad certificado en cada etapa del proyecto.',
   },
   {
     icono: 'seguridad',
     titulo: 'Seguridad primero',
-    descripcion: 'Protocolos estrictos en cada etapa del proyecto.',
-  },
-  {
-    icono: 'sostenibilidad',
-    titulo: 'Sostenibilidad',
-    descripcion: 'Soluciones responsables con el medio ambiente.',
+    descripcion: 'Protocolos estrictos de seguridad en cada obra.',
   },
   {
     icono: 'objetivo',
-    titulo: 'Enfoque integral',
-    descripcion: 'Diseño, construcción y supervisión en un solo equipo.',
+    titulo: 'Cumplimiento de plazos',
+    descripcion: 'Entregamos en tiempo y dentro del presupuesto acordado.',
+  },
+  {
+    icono: 'sostenibilidad',
+    titulo: 'Normativas nacionales',
+    descripcion: 'Cumplimiento de todas las normas y reglamentos vigentes.',
   },
 ];
 
@@ -58,9 +58,9 @@ export const barraConfianza: TrustBarItem[] = [
 export const nosotros: Nosotros = {
   encabezado: {
     textoSuperior: 'Sobre Nosotros',
-    titulo: 'Más de 15 años construyendo confianza',
+    titulo: 'Construimos el futuro con ingeniería y excelencia',
     descripcion:
-      'Somos una empresa especializada en construcción, supervisión e infraestructura, ofreciendo soluciones integrales con altos estándares de calidad, seguridad y cumplimiento normativo.',
+      'GIISA es una empresa mexicana especializada en el desarrollo de proyectos de infraestructura, construcción y supervisión de obras civiles e industriales. Nuestro compromiso es brindar soluciones eficientes, seguras y sustentables que generen valor para nuestros clientes y para el desarrollo del país.',
   },
   boton: { texto: 'Conócenos más', url: '/about' },
 };
@@ -88,24 +88,38 @@ export const encabezadoServicios: EncabezadoSeccion = {
 export const servicios: Servicio[] = [
   {
     id: 1,
-    nombre: 'Construcción Civil',
-    slug: 'construccion-civil',
+    nombre: 'Obra Civil',
+    slug: 'obra-civil',
     descripcionCorta:
-      'Ejecución de obras civiles e industriales con altos estándares de calidad y seguridad.',
+      'Carreteras, autopistas, puentes, infraestructura urbana, obras hidráulicas y pavimentaciones con los más altos estándares de calidad.',
   },
   {
     id: 2,
-    nombre: 'Supervisión de Obras',
-    slug: 'supervision-de-obras',
+    nombre: 'Edificación',
+    slug: 'edificacion',
     descripcionCorta:
-      'Control y seguimiento técnico de proyectos para garantizar el cumplimiento de especificaciones.',
+      'Edificios corporativos, centros comerciales, hospitales, escuelas y vivienda vertical. Proyectos de cualquier escala y complejidad.',
   },
   {
     id: 3,
-    nombre: 'Infraestructura',
-    slug: 'infraestructura',
+    nombre: 'Naves Industriales',
+    slug: 'naves-industriales',
     descripcionCorta:
-      'Desarrollo de infraestructura vial, hidráulica y urbana para comunidades y sectores productivos.',
+      'Diseño y construcción de naves industriales, ampliaciones, plataformas y estructuras metálicas a la medida de tu operación.',
+  },
+  {
+    id: 4,
+    nombre: 'Supervisión de Obra',
+    slug: 'supervision-de-obra',
+    descripcionCorta:
+      'Supervisión técnica, control de calidad, seguimiento de programas, gestión documental y control de costos en cada etapa.',
+  },
+  {
+    id: 5,
+    nombre: 'Mantenimiento Integral',
+    slug: 'mantenimiento-integral',
+    descripcionCorta:
+      'Instalaciones eléctricas, sistemas electromecánicos, mantenimiento preventivo y correctivo, y conservación de inmuebles.',
   },
 ];
 

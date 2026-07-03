@@ -2,34 +2,88 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
-import { brand } from '../../config/brand';
+import { client } from '../../data/client';
 ---
 
-<BaseLayout title="Message Sent" description="Your message has been received.">
+<BaseLayout title="Mensaje enviado — GIISA" description="Hemos recibido tu mensaje. Te contactaremos en menos de 24 horas.">
   <Header slot="header" />
 
-  <section class="flex min-h-[60vh] items-center justify-center px-4">
-    <div class="mx-auto max-w-md text-center">
-      <div class="mx-auto mb-6 flex size-16 items-center justify-center rounded-full bg-accent/10">
-        <svg class="size-8 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-        </svg>
-      </div>
-
-      <h1 class="font-heading text-h1 font-bold uppercase text-text">
-        Message Received
-      </h1>
-      <p class="mt-4 text-text-muted leading-relaxed">
-        Thank you for reaching out. We'll get back to you within one business day.
-      </p>
-      <a
-        href="/"
-        class="mt-8 inline-flex min-h-11 items-center justify-center rounded-md bg-primary px-8 py-3 text-base font-bold text-primary-fg shadow-sm transition-opacity hover:opacity-90"
-      >
-        Back to Home
-      </a>
+  <main>
+    <!-- Hero de confirmación -->
+    <div class="bg-dark py-16 text-center">
+      <p class="text-topper font-bold uppercase tracking-widest text-accent">Formulario de contacto</p>
+      <h1 class="mt-2 font-heading text-h1 font-bold text-white">Cotización</h1>
     </div>
-  </section>
+
+    <!-- Contenido principal -->
+    <section class="py-section">
+      <div class="mx-auto max-w-2xl px-4 sm:px-6 text-center">
+
+        <!-- Ícono de éxito -->
+        <div class="mx-auto mb-8 flex size-20 items-center justify-center rounded-full bg-accent/10 ring-8 ring-accent/5">
+          <svg class="size-10 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" />
+          </svg>
+        </div>
+
+        <!-- Mensaje principal -->
+        <h2 class="font-heading text-h2 font-bold text-text">
+          ¡Solicitud recibida!
+        </h2>
+        <p class="mt-4 text-lg text-text-muted leading-relaxed">
+          Gracias por contactarnos. Un especialista de GIISA revisará tu solicitud y se pondrá en contacto contigo en un plazo de <strong class="text-text font-semibold">menos de 24 horas hábiles</strong>.
+        </p>
+
+        <!-- Separador -->
+        <div class="my-8 h-px bg-border"></div>
+
+        <!-- Qué sigue -->
+        <div class="rounded-xl bg-surface p-6 text-left">
+          <h3 class="font-heading text-base font-bold text-text mb-4">¿Qué sigue?</h3>
+          <ol class="space-y-3">
+            {[
+              "Nuestro equipo revisará los detalles de tu proyecto.",
+              "Te contactaremos para agendar una llamada de diagnóstico sin costo.",
+              "Recibirás una propuesta técnica y económica personalizada.",
+            ].map((step, i) => (
+              <li class="flex items-start gap-3">
+                <span class="flex size-6 shrink-0 items-center justify-center rounded-full bg-primary text-xs font-bold text-white">
+                  {i + 1}
+                </span>
+                <span class="text-text-muted text-sm leading-relaxed">{step}</span>
+              </li>
+            ))}
+          </ol>
+        </div>
+
+        <!-- Contacto directo -->
+        <p class="mt-6 text-sm text-text-muted">
+          ¿Necesitas atención inmediata? Llámanos directamente:
+          <a href={`tel:${client.phoneForTel}`} class="font-semibold text-primary hover:text-accent transition-colors">
+            {client.phoneFormatted}
+          </a>
+        </p>
+
+        <!-- Botones -->
+        <div class="mt-10 flex flex-col gap-3 sm:flex-row sm:justify-center">
+          <a
+            href="/"
+            class="inline-flex min-h-11 items-center justify-center rounded-md bg-primary px-8 py-3 text-base font-bold text-primary-fg shadow-sm transition-opacity hover:opacity-90"
+          >
+            Ir al inicio
+          </a>
+          <a
+            href="/#servicios"
+            class="inline-flex min-h-11 items-center justify-center rounded-md border-2 border-primary px-8 py-3 text-base font-bold text-primary transition-colors hover:bg-primary hover:text-primary-fg"
+          >
+            Ver nuestros servicios
+          </a>
+        </div>
+
+      </div>
+    </section>
+  </main>
 
   <Footer slot="footer" />
 </BaseLayout>
+
