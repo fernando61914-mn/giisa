@@ -10,38 +10,31 @@ import Services from "../components/Services.astro";
 import Projects from "../components/Projects.astro";
 import CTA from "../components/CTA.astro";
 
-import { getHome } from "../lib/api/home";
-
-let home;
-try {
-  home = await getHome();
-} catch {
-  home = undefined;
-}
+import * as homeData from "../data/home";
 ---
 
 <BaseLayout
-  title={home?.seo?.tituloSeo}
-  description={home?.seo?.descripcionSeo}
+  title={`${homeData.hero.titulo} — GIISA`}
+  description={homeData.nosotros.encabezado?.descripcion}
 >
   <Header slot="header" />
 
   <main>
-    <Hero data={home?.hero} />
-    <TrustBar items={home?.barraConfianza} />
-    <About data={home?.nosotros} />
-    <Statistics data={home?.estadisticas} />
+    <Hero data={homeData.hero} />
+    <TrustBar items={homeData.barraConfianza} />
+    <About data={homeData.nosotros} />
+    <Statistics data={homeData.estadisticas} />
     <Services
-      encabezado={home?.encabezadoServicios}
-      servicios={home?.serviciosDestacados}
-      boton={home?.botonServicios}
+      encabezado={homeData.encabezadoServicios}
+      servicios={homeData.servicios}
+      boton={homeData.botonServicios}
     />
     <Projects
-      encabezado={home?.encabezadoProyectos}
-      proyectos={home?.proyectosDestacados}
-      boton={home?.botonProyectos}
+      encabezado={homeData.encabezadoProyectos}
+      proyectos={homeData.proyectos}
+      boton={homeData.botonProyectos}
     />
-    <CTA data={home?.llamadoAccion} />
+    <CTA data={homeData.cta} />
   </main>
 
   <Footer slot="footer" />

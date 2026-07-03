@@ -2,36 +2,25 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import Header from "../../components/Header.astro";
 import Footer from "../../components/Footer.astro";
-import Hero from "../../components/Hero.astro";
 import { brand } from "../../config/brand";
 import { client } from "../../data/client";
-import { getContacto } from "../../lib/api/contact";
 
-let contacto;
-try {
-  contacto = await getContacto();
-} catch {
-  contacto = undefined;
-}
+// URL del Google Apps Script (configurar en Cloudflare Pages → Settings → Environment Variables)
+const appsScriptUrl = import.meta.env.PUBLIC_APPS_SCRIPT_URL ?? '';
 ---
 
 <BaseLayout
-  title={contacto?.seo?.tituloSeo ?? "Contacto"}
-  description={contacto?.seo?.descripcionSeo ?? `Contáctanos — ${brand.name}`}
+  title={`Contacto — ${brand.name}`}
+  description={`Contáctanos — ${brand.name}. Asesoría personalizada y cotización sin costo.`}
 >
   <Header slot="header" />
 
   <main>
-    {
-      contacto?.hero ? (
-        <Hero data={contacto.hero} />
-      ) : (
-        <div class="bg-dark py-16 text-center">
-          <h1 class="font-heading text-h1 font-bold text-white">Contáctanos</h1>
-          <p class="mt-3 text-white/70">Estamos listos para atenderte.</p>
-        </div>
-      )
-    }
+    <!-- Hero -->
+    <div class="bg-dark py-16 text-center">
+      <h1 class="font-heading text-h1 font-bold text-white">Contáctanos</h1>
+      <p class="mt-3 text-white/70">Estamos listos para atenderte.</p>
+    </div>
 
     <section class="py-section">
       <div
@@ -39,60 +28,41 @@ try {
       >
         <!-- Formulario -->
         <div class="lg:col-span-3">
-          {
-            contacto?.encabezado ? (
-              <div class="mb-8">
-                {contacto.encabezado.textoSuperior && (
-                  <span class="text-topper font-bold uppercase tracking-widest text-accent">
-                    {contacto.encabezado.textoSuperior}
-                  </span>
-                )}
-                <h2 class="mt-2 font-heading text-h2 font-bold text-text">
-                  {contacto.encabezado.titulo}
-                </h2>
-                {contacto.encabezado.descripcion && (
-                  <p class="mt-2 text-text-muted">
-                    {contacto.encabezado.descripcion}
-                  </p>
-                )}
-              </div>
-            ) : (
-              <div class="mb-8">
-                <h2 class="font-heading text-h2 font-bold text-text">
-                  Envíanos un mensaje
-                </h2>
-                <p class="mt-2 text-text-muted">
-                  Completa el formulario y te responderemos en menos de 24
-                  horas.
-                </p>
-              </div>
-            )
-          }
+          <div class="mb-8">
+            <span class="text-topper font-bold uppercase tracking-widest text-accent">
+              Escríbenos
+            </span>
+            <h2 class="mt-2 font-heading text-h2 font-bold text-text">
+              Envíanos un mensaje
+            </h2>
+            <p class="mt-2 text-text-muted">
+              Completa el formulario y te responderemos en menos de 24 horas.
+            </p>
+          </div>
 
-          <form
-            name="contact"
-            method="POST"
-            data-netlify="true"
-            netlify-honeypot="bot-field"
-            action="/contact/success"
-            class="flex flex-col gap-5"
+          <!-- Alerta de error (oculta por defecto) -->
+          <div
+            id="form-error"
+            class="mb-5 hidden rounded-md border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700"
+            role="alert"
           >
-            <input type="hidden" name="form-name" value="contact" />
+            Ocurrió un error al enviar el mensaje. Por favor intenta de nuevo o
+            contáctanos directamente por teléfono.
+          </div>
+
+          <form id="contact-form" novalidate class="flex flex-col gap-5">
+            <!-- Honeypot anti-spam -->
             <p class="hidden" aria-hidden="true">
-              <label
-                >Deja esto vacío: <input
-                  name="bot-field"
-                  tabindex="-1"
-                  autocomplete="off"
-                /></label
-              >
+              <label>
+                Deja esto vacío:
+                <input name="bot-field" tabindex="-1" autocomplete="off" />
+              </label>
             </p>
 
             <label class="flex flex-col gap-1.5">
-              <span class="text-sm font-medium text-text"
-                >Nombre <span class="text-accent" aria-hidden="true">*</span
-                ></span
-              >
+              <span class="text-sm font-medium text-text">
+                Nombre <span class="text-accent" aria-hidden="true">*</span>
+              </span>
               <input
                 type="text"
                 name="name"
@@ -103,11 +73,10 @@ try {
             </label>
 
             <label class="flex flex-col gap-1.5">
-              <span class="text-sm font-medium text-text"
-                >Correo electrónico <span class="text-accent" aria-hidden="true"
-                  >*</span
-                ></span
-              >
+              <span class="text-sm font-medium text-text">
+                Correo electrónico
+                <span class="text-accent" aria-hidden="true">*</span>
+              </span>
               <input
                 type="email"
                 name="email"
@@ -128,10 +97,9 @@ try {
             </label>
 
             <label class="flex flex-col gap-1.5">
-              <span class="text-sm font-medium text-text"
-                >Mensaje <span class="text-accent" aria-hidden="true">*</span
-                ></span
-              >
+              <span class="text-sm font-medium text-text">
+                Mensaje <span class="text-accent" aria-hidden="true">*</span>
+              </span>
               <textarea
                 name="message"
                 required
@@ -142,7 +110,8 @@ try {
 
             <button
               type="submit"
-              class="inline-flex min-h-12 items-center justify-center rounded-md bg-primary px-8 py-3 text-base font-bold text-primary-fg shadow-sm transition-opacity hover:opacity-90"
+              id="submit-btn"
+              class="inline-flex min-h-12 items-center justify-center gap-2 rounded-md bg-primary px-8 py-3 text-base font-bold text-primary-fg shadow-sm transition-opacity hover:opacity-90 disabled:opacity-60"
             >
               Enviar mensaje
             </button>
@@ -156,99 +125,49 @@ try {
           </h3>
 
           <ul class="mt-6 space-y-5">
+            <!-- Teléfono -->
             <li class="flex items-start gap-3">
-              <svg
-                class="mt-0.5 size-5 shrink-0 text-primary"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                aria-hidden="true"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
-                ></path>
+              <svg class="mt-0.5 size-5 shrink-0 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
               </svg>
-              <a
-                href={`tel:${client.phoneForTel}`}
-                class="text-text hover:text-primary transition-colors"
-              >
-                {contacto?.telefono ?? client.phoneFormatted}
+              <a href={`tel:${client.phoneForTel}`} class="text-text transition-colors hover:text-primary">
+                {client.phoneFormatted}
               </a>
             </li>
 
+            <!-- Email -->
             <li class="flex items-start gap-3">
-              <svg
-                class="mt-0.5 size-5 shrink-0 text-primary"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                aria-hidden="true"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                ></path>
+              <svg class="mt-0.5 size-5 shrink-0 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
               </svg>
-              <a
-                href={`mailto:${contacto?.correo ?? client.email}`}
-                class="text-text hover:text-primary transition-colors"
-              >
-                {contacto?.correo ?? client.email}
+              <a href={`mailto:${client.email}`} class="text-text transition-colors hover:text-primary">
+                {client.email}
               </a>
             </li>
 
-            {
-              (contacto?.direccion ?? client.address) && (
-                <li class="flex items-start gap-3">
-                  <svg
-                    class="mt-0.5 size-5 shrink-0 text-primary"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    aria-hidden="true"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                    />
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                    />
-                  </svg>
-                  <span class="text-text">
-                    {contacto?.direccion ?? client.address}
-                  </span>
-                </li>
-              )
-            }
+            <!-- Dirección -->
+            {client.address && (
+              <li class="flex items-start gap-3">
+                <svg class="mt-0.5 size-5 shrink-0 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+                <span class="text-text">{client.address}</span>
+              </li>
+            )}
+
+            <!-- WhatsApp -->
+            {client.whatsapp && client.whatsapp !== '#' && (
+              <li class="flex items-start gap-3">
+                <svg class="mt-0.5 size-5 shrink-0 text-primary" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+                </svg>
+                <a href={client.whatsapp} target="_blank" rel="noopener noreferrer" class="text-text transition-colors hover:text-primary">
+                  WhatsApp
+                </a>
+              </li>
+            )}
           </ul>
-
-          {
-            contacto?.urlGoogleMaps && (
-              <div class="mt-8 overflow-hidden rounded-xl border border-border">
-                <iframe
-                  src={contacto.urlGoogleMaps}
-                  width="100%"
-                  height="250"
-                  style="border:0"
-                  allowfullscreen
-                  loading="lazy"
-                  referrerpolicy="no-referrer-when-downgrade"
-                  title="Ubicación en Google Maps"
-                />
-              </div>
-            )
-          }
         </aside>
       </div>
     </section>
@@ -256,3 +175,55 @@ try {
 
   <Footer slot="footer" />
 </BaseLayout>
+
+<script define:vars={{ appsScriptUrl }}>
+  document.addEventListener('astro:page-load', () => {
+    const form = document.getElementById('contact-form');
+    const btn = document.getElementById('submit-btn');
+    const errorBox = document.getElementById('form-error');
+
+    if (!form || !btn) return;
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      // Honeypot anti-spam
+      const honeypot = form.querySelector('[name="bot-field"]');
+      if (honeypot && honeypot.value) return;
+
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = 'Enviando…';
+      if (errorBox) errorBox.classList.add('hidden');
+
+      const data = {
+        name: form.querySelector('[name="name"]').value,
+        email: form.querySelector('[name="email"]').value,
+        phone: form.querySelector('[name="phone"]').value,
+        message: form.querySelector('[name="message"]').value,
+        timestamp: new Date().toLocaleString('es-MX'),
+      };
+
+      try {
+        if (!appsScriptUrl) throw new Error('Apps Script URL no configurada');
+
+        await fetch(appsScriptUrl, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'text/plain' },
+          body: JSON.stringify(data),
+        });
+
+        window.location.href = '/contact/success';
+      } catch {
+        btn.disabled = false;
+        btn.textContent = 'Enviar mensaje';
+        if (errorBox) errorBox.classList.remove('hidden');
+      }
+    });
+  });
+</script>
