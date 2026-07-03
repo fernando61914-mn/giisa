@@ -36,7 +36,7 @@ export async function onRequestPost(context) {
         response: token,
         remoteip: request.headers.get("CF-Connecting-IP") ?? undefined,
       }),
-    }
+    },
   );
 
   const { success } = await verify.json();

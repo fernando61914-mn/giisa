@@ -149,7 +149,8 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? "";
               data-sitekey={turnstileSiteKey}
               data-theme="light"
               data-language="es"
-            ></div>
+            >
+            </div>
 
             <button
               type="submit"
@@ -278,7 +279,11 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? "";
 </BaseLayout>
 
 <!-- Turnstile script -->
-<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer is:inline></script>
+<script
+  src="https://challenges.cloudflare.com/turnstile/v0/api.js"
+  async
+  defer
+  is:inline></script>
 
 <script>
   document.addEventListener("astro:page-load", () => {
@@ -301,10 +306,13 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? "";
       }
 
       // Verificar que Turnstile fue completado
-      const turnstileToken = form.querySelector('[name="cf-turnstile-response"]')?.value;
+      const turnstileToken = form.querySelector(
+        '[name="cf-turnstile-response"]',
+      )?.value;
       if (!turnstileToken) {
         if (errorBox) {
-          errorBox.textContent = "Por favor completa la verificación de seguridad.";
+          errorBox.textContent =
+            "Por favor completa la verificación de seguridad.";
           errorBox.classList.remove("hidden");
         }
         return;
@@ -341,7 +349,8 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? "";
         btn.disabled = false;
         btn.textContent = "Enviar mensaje";
         if (errorBox) {
-          errorBox.textContent = err.message || "Ocurrió un error. Por favor intenta de nuevo.";
+          errorBox.textContent =
+            err.message || "Ocurrió un error. Por favor intenta de nuevo.";
           errorBox.classList.remove("hidden");
         }
         // Resetear Turnstile para que el usuario pueda reintentar
