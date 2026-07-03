@@ -5,7 +5,7 @@ import sitemap from "@astrojs/sitemap";
 import robotsTxt from "astro-robots-txt";
 
 export default defineConfig({
-  site: "https://gii.com.mx",
+  site: "https://grupogii.com",
   output: "static",
 
   // Permite que Astro descargue y optimice imágenes remotas en build time

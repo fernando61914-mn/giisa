@@ -11,7 +11,7 @@ export const brand = {
   tagline: 'Construcción y Supervisión de Proyectos.',
   description:
     'Grupo de Infraestructura Integral es una empresa especializada en construcción, supervisión e infraestructura, ofreciendo soluciones integrales con altos estándares de calidad, seguridad y cumplimiento.',
-  url: 'https://gii.com.mx',
+  url: 'https://grupogii.com',
   locale: 'es_MX',
 
   // ── Fonts ──────────────────────────────────────────────────────────────────

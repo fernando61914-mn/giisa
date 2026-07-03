@@ -84,7 +84,7 @@
     font-size="24"
     font-weight="500"
     fill="rgba(255,255,255,0.45)"
-  >gii.com.mx</text>
+  >grupogii.com</text>
 
   <!-- Punto azul decorativo antes del dominio -->
   <circle cx="62" cy="520" r="4" fill="#005BAA" opacity="0.7"/>
