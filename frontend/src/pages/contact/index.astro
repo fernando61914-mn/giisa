@@ -5,8 +5,8 @@ import Footer from "../../components/Footer.astro";
 import { brand } from "../../config/brand";
 import { client } from "../../data/client";
 
-// URL del Google Apps Script (configurar en Cloudflare Pages → Settings → Environment Variables)
-const appsScriptUrl = import.meta.env.PUBLIC_APPS_SCRIPT_URL ?? "";
+// Clave pública de Cloudflare Turnstile
+const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? "";
 ---
 
 <BaseLayout
@@ -143,6 +143,14 @@ const appsScriptUrl = import.meta.env.PUBLIC_APPS_SCRIPT_URL ?? "";
               ></textarea>
             </label>
 
+            <!-- Turnstile CAPTCHA -->
+            <div
+              class="cf-turnstile"
+              data-sitekey={turnstileSiteKey}
+              data-theme="light"
+              data-language="es"
+            ></div>
+
             <button
               type="submit"
               id="submit-btn"
@@ -269,7 +277,10 @@ const appsScriptUrl = import.meta.env.PUBLIC_APPS_SCRIPT_URL ?? "";
   <Footer slot="footer" />
 </BaseLayout>
 
-<script define:vars={{ appsScriptUrl }}>
+<!-- Turnstile script -->
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer is:inline></script>
+
+<script>
   document.addEventListener("astro:page-load", () => {
     const form = document.getElementById("contact-form");
     const btn = document.getElementById("submit-btn");
@@ -289,6 +300,16 @@ const appsScriptUrl = import.meta.env.PUBLIC_APPS_SCRIPT_URL ?? "";
         return;
       }
 
+      // Verificar que Turnstile fue completado
+      const turnstileToken = form.querySelector('[name="cf-turnstile-response"]')?.value;
+      if (!turnstileToken) {
+        if (errorBox) {
+          errorBox.textContent = "Por favor completa la verificación de seguridad.";
+          errorBox.classList.remove("hidden");
+        }
+        return;
+      }
+
       btn.disabled = true;
       btn.textContent = "Enviando…";
       if (errorBox) errorBox.classList.add("hidden");
@@ -300,24 +321,31 @@ const appsScriptUrl = import.meta.env.PUBLIC_APPS_SCRIPT_URL ?? "";
         phone: form.querySelector('[name="phone"]').value,
         projectType: form.querySelector('[name="projectType"]').value,
         message: form.querySelector('[name="message"]').value,
-        timestamp: new Date().toLocaleString("es-MX"),
+        "cf-turnstile-response": turnstileToken,
       };
 
       try {
-        if (!appsScriptUrl) throw new Error("Apps Script URL no configurada");
-
-        await fetch(appsScriptUrl, {
+        const res = await fetch("/api/contact", {
           method: "POST",
-          mode: "no-cors",
-          headers: { "Content-Type": "text/plain" },
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify(data),
         });
 
-        window.location.href = "/contact/success";
-      } catch {
+        if (res.ok) {
+          window.location.href = "/contact/success";
+        } else {
+          const { error } = await res.json().catch(() => ({}));
+          throw new Error(error ?? "Error del servidor");
+        }
+      } catch (err) {
         btn.disabled = false;
         btn.textContent = "Enviar mensaje";
-        if (errorBox) errorBox.classList.remove("hidden");
+        if (errorBox) {
+          errorBox.textContent = err.message || "Ocurrió un error. Por favor intenta de nuevo.";
+          errorBox.classList.remove("hidden");
+        }
+        // Resetear Turnstile para que el usuario pueda reintentar
+        if (window.turnstile) window.turnstile.reset();
       }
     });
   });
