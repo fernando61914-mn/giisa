@@ -22,11 +22,13 @@ import logoImg from '../assets/images/logo.png';
 import heroFondo from '../assets/images/hero/hero.png';
 
 // ── Nosotros / About ──────────────────────────────────────────────────────────
-// import aboutPrincipal from '../assets/images/about/equipo.jpg';
+import aboutPrincipal from '../assets/images/about/equipo.png';
 
 // ── Proyectos ─────────────────────────────────────────────────────────────────
 import proyTuberiaCorrugada from '../assets/images/projects/instalacion-tuberia-corrugada-drenaje.png';
-// import proyNombreDelProyecto from '../assets/images/projects/nombre-del-proyecto.jpg';
+import proyTuberiaHierroDuctil from '../assets/images/projects/instalacion-tuberia-hierro-ductil.jpg';
+import proyTuberiaPeadTermofusion from '../assets/images/projects/instalacion-tuberia-pead-termofusion.png';
+import proyPozosAbsorcion from '../assets/images/projects/construccion-mantenimiento-pozos-absorcion.jpg';
 
 // ── Galería ───────────────────────────────────────────────────────────────────
 // import galeria01 from '../assets/images/gallery/foto-01.jpg';
@@ -53,7 +55,7 @@ export const heroImages = {
  * Descomenta y agrega cuando tengas las fotos del equipo o la empresa.
  */
 export const aboutImages: { principal?: ImageMetadata } = {
-  // principal: aboutPrincipal,
+  principal: aboutPrincipal,
 };
 
 /**
@@ -62,7 +64,9 @@ export const aboutImages: { principal?: ImageMetadata } = {
  */
 export const projectImages: Record<string, ImageMetadata> = {
   'instalacion-tuberia-corrugada-drenaje': proyTuberiaCorrugada,
-  // 'nombre-del-proyecto': proyNombreDelProyecto,
+  'instalacion-tuberia-hierro-ductil': proyTuberiaHierroDuctil, 
+  'instalacion-tuberia-pead-termofusion': proyTuberiaPeadTermofusion,
+  'construccion-mantenimiento-pozos-absorcion': proyPozosAbsorcion,
 };
 
 /**

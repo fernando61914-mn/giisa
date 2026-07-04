@@ -146,6 +146,27 @@ export const proyectos: Proyecto[] = [
     descripcionCorta: 'Descripción breve del proyecto de ejemplo.',
     imagenLocal: projectImages['instalacion-tuberia-corrugada-drenaje'],
   },
+  {
+    id: 2,
+    nombre: 'Instalación de Tubería de Hierro Dúctil',
+    slug: 'instalacion-tuberia-hierro-ductil',
+    descripcionCorta: 'Descripción breve del proyecto de ejemplo.',
+    imagenLocal: projectImages['instalacion-tuberia-hierro-ductil'],
+  },
+  {
+    id: 3,
+    nombre: 'Instalación de Tubería PEAD Termofusión',
+    slug: 'instalacion-tuberia-pead-termofusion',
+    descripcionCorta: 'Descripción breve del proyecto de ejemplo.',
+    imagenLocal: projectImages['instalacion-tuberia-pead-termofusion'],
+  },
+  {
+    id: 4,
+    nombre: 'Construcción y Mantenimiento de Pozos de Absorción',
+    slug: 'construccion-mantenimiento-pozos-absorcion',
+    descripcionCorta: 'Descripción breve del proyecto de ejemplo.',
+    imagenLocal: projectImages['construccion-mantenimiento-pozos-absorcion'],
+  }
 ];
 
 export const botonProyectos: Boton = {
