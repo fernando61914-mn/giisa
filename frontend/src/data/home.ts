@@ -17,6 +17,9 @@ import type {
 import type { Servicio } from '../lib/types/service';
 import type { Proyecto } from '../lib/types/project';
 
+// ── Imágenes locales de proyectos ─────────────────────────────────────────────
+import imgTuberiaCorrugada from '../assets/images/projects/instalacion-tuberia-corrugada-drenaje.png';
+
 // ── Hero ─────────────────────────────────────────────────────────────────────
 
 export const hero: ComponenteHero = {
@@ -135,9 +138,17 @@ export const encabezadoProyectos: EncabezadoSeccion = {
   titulo: 'Proyectos Destacados',
 };
 
-// Agrega proyectos aquí cuando tengas imágenes disponibles:
-// { id: 1, nombre: "Nombre del proyecto", slug: "slug", descripcionCorta: "..." }
-export const proyectos: Proyecto[] = [];
+// Agrega proyectos aquí. Para imágenes locales: importa arriba con `import img from '../assets/images/projects/...'`
+// y usa `imagenLocal: img` para que Astro las optimice (WebP + srcset automático).
+export const proyectos: Proyecto[] = [
+  {
+    id: 1,
+    nombre: 'Instalación de Tubería Corrugada de Drenaje',
+    slug: 'instalacion-tuberia-corrugada-drenaje',
+    descripcionCorta: 'Descripción breve del proyecto de ejemplo.',
+    imagenLocal: imgTuberiaCorrugada,
+  },
+];
 
 export const botonProyectos: Boton = {
   texto: 'Ver todos los proyectos',

@@ -1,7 +1,7 @@
 ---
+import { Image } from 'astro:assets';
 import type { EncabezadoSeccion, Boton } from '../lib/types/shared';
 import type { Proyecto } from '../lib/types/project';
-import { strapiImageUrl } from '../lib/strapi';
 
 interface Props {
   encabezado?: EncabezadoSeccion;
@@ -30,22 +30,35 @@ const PLACEHOLDER_IMG = 'https://images.unsplash.com/photo-1541888946425-d81bb19
     {proyectos.length > 0 ? (
       <ul class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4" role="list">
         {proyectos.map((p) => {
-          const imgSrc = p.imagenPrincipal ? strapiImageUrl(p.imagenPrincipal.url) : PLACEHOLDER_IMG;
+          const altText = p.imagenPrincipal?.alternativeText ?? p.nombre;
           return (
             <li>
               <a
                 href={`/projects/${p.slug}`}
                 class="group relative flex aspect-square overflow-hidden rounded-xl shadow-md"
               >
-                <img
-                  src={imgSrc}
-                  alt={p.imagenPrincipal?.alternativeText ?? p.nombre}
-                  width={400}
-                  height={400}
-                  loading="lazy"
-                  decoding="async"
-                  class="size-full object-cover transition-transform duration-300 group-hover:scale-105"
-                />
+                {p.imagenLocal ? (
+                  <Image
+                    src={p.imagenLocal}
+                    alt={altText}
+                    width={400}
+                    height={400}
+                    loading="lazy"
+                    widths={[400, 800]}
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                    class="size-full object-cover transition-transform duration-300 group-hover:scale-105"
+                  />
+                ) : (
+                  <img
+                    src={p.imagenPrincipal?.url || PLACEHOLDER_IMG}
+                    alt={altText}
+                    width={400}
+                    height={400}
+                    loading="lazy"
+                    decoding="async"
+                    class="size-full object-cover transition-transform duration-300 group-hover:scale-105"
+                  />
+                )}
                 <!-- Overlay con texto -->
                 <div class="absolute inset-0 flex flex-col justify-end bg-linear-to-t from-dark/80 via-dark/30 to-transparent p-4 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
                   <h3 class="font-heading text-base font-bold text-white">{p.nombre}</h3>
