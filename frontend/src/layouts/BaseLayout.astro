@@ -6,8 +6,9 @@
  *  • <Font />         — built-in font optimizer from astro.config.mjs fonts array
  *  • <ClientRouter /> — client-side navigation with CSS transition animations
  */
-import { Font } from "astro:assets";
+import { Font, getImage } from "astro:assets";
 import { ClientRouter } from "astro:transitions";
+import type { ImageMetadata } from "astro";
 import "../styles/global.css";
 import { brand } from "../config/brand";
 import { client } from "../data/client";
@@ -17,6 +18,8 @@ interface Props {
   description?: string;
   image?: string;
   schema?: Record<string, unknown>;
+  /** Imagen LCP crítica — se preloadeará en <head> para mejorar LCP */
+  preloadImage?: ImageMetadata;
 }
 
 const {
@@ -24,10 +27,20 @@ const {
   description = brand.description,
   image = "/og-image.svg",
   schema,
+  preloadImage,
 } = Astro.props;
 
 const pageTitle = title === brand.name ? title : `${title} — ${brand.name}`;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? brand.url);
+
+// Genera el srcset optimizado para el preload del hero
+const heroPreload = preloadImage
+  ? await getImage({
+      src: preloadImage,
+      widths: [768, 1024, 1400],
+      format: "webp",
+    })
+  : null;
 ---
 
 <html lang={brand.locale.split("_")[0]} class="scroll-smooth">
@@ -61,6 +74,20 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? brand.url);
     <!-- Fonts -->
     <Font cssVariable="--font-display" preload />
     <Font cssVariable="--font-body" preload />
+
+    <!-- Preload imagen LCP crítica (hero) -->
+    {
+      heroPreload && (
+        <link
+          rel="preload"
+          as="image"
+          href={heroPreload.src}
+          imagesrcset={heroPreload.srcSet.attribute}
+          imagesizes="100vw"
+          fetchpriority="high"
+        />
+      )
+    }
 
     <!-- JSON-LD Structured Data -->
     {

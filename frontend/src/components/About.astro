@@ -1,6 +1,7 @@
 ---
+import { Image } from "astro:assets";
 import type { Nosotros } from "../lib/types/shared";
-import { strapiImageUrl } from "../lib/strapi";
+import { aboutImages } from "../config/images";
 
 const PLACEHOLDER =
   "https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=900&q=80";
@@ -17,9 +18,12 @@ const titulo =
 const descripcion =
   data?.encabezado?.descripcion ??
   "Somos una empresa especializada en construcción, supervisión e infraestructura, ofreciendo soluciones integrales con altos estándares de calidad, seguridad y cumplimiento normativo.";
-const imageSrc = data?.imagen ? strapiImageUrl(data.imagen.url) : PLACEHOLDER;
 const imageAlt = data?.imagen?.alternativeText ?? "Equipo GIISA en obra";
 const boton = data?.boton ?? { texto: "Conócenos más", url: "/about" };
+
+// Prioridad: imagen local (Astro optimizada) > imagenPrincipal URL > placeholder
+const imagenLocal = aboutImages.principal;
+const imagenUrl = data?.imagen?.url;
 ---
 
 <section id="nosotros" class="py-section">
@@ -29,15 +33,30 @@ const boton = data?.boton ?? { texto: "Conócenos más", url: "/about" };
   >
     <!-- Imagen -->
     <div class="overflow-hidden rounded-xl shadow-lg aspect-4/3">
-      <img
-        src={imageSrc}
-        alt={imageAlt}
-        width={700}
-        height={525}
-        loading="lazy"
-        decoding="async"
-        class="size-full object-cover"
-      />
+      {
+        imagenLocal ? (
+          <Image
+            src={imagenLocal}
+            alt={imageAlt}
+            width={700}
+            height={525}
+            loading="lazy"
+            widths={[700, 1400]}
+            sizes="(max-width: 1024px) 100vw, 50vw"
+            class="size-full object-cover"
+          />
+        ) : (
+          <img
+            src={imagenUrl ?? PLACEHOLDER}
+            alt={imageAlt}
+            width={700}
+            height={525}
+            loading="lazy"
+            decoding="async"
+            class="size-full object-cover"
+          />
+        )
+      }
     </div>
 
     <!-- Contenido -->

@@ -1,6 +1,8 @@
 ---
+import { Image } from "astro:assets";
 import { brand } from "../config/brand";
 import { client } from "../data/client";
+import { logoImage } from "../config/images";
 
 const nav = [
   { label: "Inicio", href: "/" },
@@ -27,20 +29,15 @@ const currentPath = Astro.url.pathname;
       class="flex items-center gap-2 transition-opacity hover:opacity-80"
       aria-label={brand.name}
     >
-      <img
-        src="/logo.png"
+      <Image
+        src={logoImage}
         alt={brand.name}
-        height="72"
-        width="auto"
+        width={486}
+        height={440}
         class="h-16 w-auto object-contain sm:h-[72px]"
-        onerror="this.style.display='none';this.nextElementSibling.style.display='block'"
+        loading="eager"
+        fetchpriority="high"
       />
-      <span
-        class="font-heading text-xl font-bold uppercase tracking-wide text-primary"
-        style="display:none"
-      >
-        {brand.name}
-      </span>
     </a>
 
     <!-- Desktop nav -->

@@ -16,9 +16,7 @@ import type {
 } from '../lib/types/shared';
 import type { Servicio } from '../lib/types/service';
 import type { Proyecto } from '../lib/types/project';
-
-// ── Imágenes locales de proyectos ─────────────────────────────────────────────
-import imgTuberiaCorrugada from '../assets/images/projects/instalacion-tuberia-corrugada-drenaje.png';
+import { projectImages } from '../config/images';
 
 // ── Hero ─────────────────────────────────────────────────────────────────────
 
@@ -146,7 +144,7 @@ export const proyectos: Proyecto[] = [
     nombre: 'Instalación de Tubería Corrugada de Drenaje',
     slug: 'instalacion-tuberia-corrugada-drenaje',
     descripcionCorta: 'Descripción breve del proyecto de ejemplo.',
-    imagenLocal: imgTuberiaCorrugada,
+    imagenLocal: projectImages['instalacion-tuberia-corrugada-drenaje'],
   },
 ];
 

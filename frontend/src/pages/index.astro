@@ -13,6 +13,7 @@ import CTA from "../components/CTA.astro";
 import * as homeData from "../data/home";
 import { brand } from "../config/brand";
 import { client } from "../data/client";
+import { heroImages } from "../config/images";
 
 const schema = {
   "@context": "https://schema.org",
@@ -54,6 +55,7 @@ const schema = {
   title={`${homeData.hero.titulo} — GIISA`}
   description={homeData.nosotros.encabezado?.descripcion}
   schema={schema}
+  preloadImage={heroImages.fondo}
 >
   <Header slot="header" />
 

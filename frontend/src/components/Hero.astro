@@ -1,9 +1,8 @@
 ---
 import { Image } from "astro:assets";
 import type { ComponenteHero } from "../lib/types/shared";
-import { strapiImageUrl } from "../lib/strapi";
 import { brand } from "../config/brand";
-import heroBg from "../assets/images/hero/hero.png";
+import { heroImages } from "../config/images";
 
 interface Props {
   data?: ComponenteHero;
@@ -28,30 +27,17 @@ const botonSecundario = data?.botonSecundario ?? {
 ---
 
 <section class="relative min-h-[85vh] flex items-center overflow-hidden">
-  <!-- Imagen de fondo: <Image> de Astro convierte a WebP y previene CLS -->
-  {
-    data?.imagenFondo ? (
-      <Image
-        src={strapiImageUrl(data.imagenFondo.url)}
-        alt={data.imagenFondo.alternativeText ?? brand.name}
-        width={data.imagenFondo.width ?? 1400}
-        height={data.imagenFondo.height ?? 900}
-        class="absolute inset-0 size-full object-cover"
-        loading="eager"
-        transition:name="hero-image"
-      />
-    ) : (
-      <Image
-        src={heroBg}
-        alt={brand.name}
-        class="absolute inset-0 size-full object-cover"
-        loading="eager"
-        widths={[768, 1024, 1400]}
-        sizes="100vw"
-        transition:name="hero-image"
-      />
-    )
-  }
+  <!-- Imagen de fondo optimizada por Astro: WebP + srcset + previene CLS -->
+  <Image
+    src={heroImages.fondo}
+    alt={brand.name}
+    class="absolute inset-0 size-full object-cover"
+    loading="eager"
+    fetchpriority="high"
+    widths={[768, 1024, 1400]}
+    sizes="100vw"
+    transition:name="hero-image"
+  />
 
   <!-- Overlay degradado -->
   <div
