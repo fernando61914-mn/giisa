@@ -1,4 +1,4 @@
-Dependencias del proyecto
+Dependencias del proyecto :3
 
 Este documento describe las dependencias adicionales utilizadas en el proyecto Grupo de Infraestructura Integral (GII), así como el motivo de su inclusión y los casos de uso previstos.
 
