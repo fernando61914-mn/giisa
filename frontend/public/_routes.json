@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "include": ["/*"],
+  "exclude": [
+    "/_astro/*",
+    "/*.avif",
+    "/*.css",
+    "/*.gif",
+    "/*.ico",
+    "/*.jpeg",
+    "/*.jpg",
+    "/*.js",
+    "/*.json",
+    "/*.png",
+    "/*.svg",
+    "/*.txt",
+    "/*.webp",
+    "/*.woff",
+    "/*.woff2",
+    "/*.xml"
+  ]
+}

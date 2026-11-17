@@ -8,7 +8,13 @@ export default defineConfig({
   site: "https://grupogii.com",
   output: "static",
 
-  integrations: [sitemap(), robotsTxt()],
+  integrations: [
+    sitemap({
+      filter: (page) =>
+        new URL(page).pathname.replace(/\/$/, "") !== "/contact/success",
+    }),
+    robotsTxt(),
+  ],
 
   fonts: [
     {

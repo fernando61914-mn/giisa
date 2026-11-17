@@ -18,6 +18,7 @@ interface Props {
   description?: string;
   image?: string;
   schema?: Record<string, unknown>;
+  robots?: string;
   /** Imagen LCP crítica — se preloadeará en <head> para mejorar LCP */
   preloadImage?: ImageMetadata;
 }
@@ -27,11 +28,13 @@ const {
   description = brand.description,
   image = "/og-image.svg",
   schema,
+  robots,
   preloadImage,
 } = Astro.props;
 
-const pageTitle = title === brand.name ? title : `${title} — ${brand.name}`;
+const pageTitle = title === brand.name ? title : `${title} | GIISA`;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? brand.url);
+const socialImageURL = new URL(image, brand.url);
 
 // Genera el srcset optimizado para el preload del hero
 const heroPreload = preloadImage
@@ -43,7 +46,7 @@ const heroPreload = preloadImage
   : null;
 ---
 
-<html lang={brand.locale.split("_")[0]} class="scroll-smooth">
+<html lang={brand.locale.replace("_", "-")} class="scroll-smooth">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -52,20 +55,21 @@ const heroPreload = preloadImage
     <link rel="canonical" href={canonicalURL} />
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
+    {robots && <meta name="robots" content={robots} />}
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonicalURL} />
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content={image} />
+    <meta property="og:image" content={socialImageURL} />
     <meta property="og:locale" content={brand.locale} />
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={pageTitle} />
     <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={image} />
+    <meta name="twitter:image" content={socialImageURL} />
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
