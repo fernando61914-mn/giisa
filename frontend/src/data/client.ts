@@ -2,9 +2,9 @@ export const client = {
   company: "GIISA",
 
   // ── Contacto ─────────────────────────────────────────────────────────────
-  phone: "+52 55 0000 0000",
-  phoneForTel: "+525500000000",
-  phoneFormatted: "(55) 0000 0000",
+  phone: "+52 55 1380 8550",
+  phoneForTel: "+525513808450",
+  phoneFormatted: "(55) 1380 8550",
   whatsapp: "https://wa.me/525500000000",
 
   email: "contacto@giisa.com",
