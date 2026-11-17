@@ -104,7 +104,10 @@ test("reenvía solo datos permitidos y la clave al Apps Script; no devuelve la c
   assert.equal(forwarded.sharedSecret, validEnv.APPS_SCRIPT_SHARED_SECRET);
   assert.equal(forwarded.unexpected, undefined);
   assert.equal(forwarded["cf-turnstile-response"], undefined);
-  assert.equal(JSON.stringify(result).includes(validEnv.APPS_SCRIPT_SHARED_SECRET), false);
+  assert.equal(
+    JSON.stringify(result).includes(validEnv.APPS_SCRIPT_SHARED_SECRET),
+    false,
+  );
 });
 
 test("no reporta éxito si Apps Script rechaza el registro", async (t) => {

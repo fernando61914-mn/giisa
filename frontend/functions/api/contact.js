@@ -71,7 +71,9 @@ export async function onRequestPost({ request, env }) {
   const formData = Object.fromEntries(
     Object.entries(MAX_FIELD_LENGTHS).map(([field, maxLength]) => [
       field,
-      typeof body[field] === "string" ? body[field].trim().slice(0, maxLength) : "",
+      typeof body[field] === "string"
+        ? body[field].trim().slice(0, maxLength)
+        : "",
     ]),
   );
 
@@ -81,7 +83,10 @@ export async function onRequestPost({ request, env }) {
     !formData.message ||
     !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)
   ) {
-    return jsonRes({ error: "Revisa los campos obligatorios del formulario." }, 400);
+    return jsonRes(
+      { error: "Revisa los campos obligatorios del formulario." },
+      400,
+    );
   }
 
   const token = body["cf-turnstile-response"];
