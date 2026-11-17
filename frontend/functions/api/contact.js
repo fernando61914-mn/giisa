@@ -68,6 +68,13 @@ export async function onRequestPost({ request, env }) {
     return jsonRes({ success: true });
   }
 
+  if (body.privacyConsent !== true) {
+    return jsonRes(
+      { error: "Debes aceptar el aviso de privacidad para continuar." },
+      400,
+    );
+  }
+
   const formData = Object.fromEntries(
     Object.entries(MAX_FIELD_LENGTHS).map(([field, maxLength]) => [
       field,
@@ -131,6 +138,7 @@ export async function onRequestPost({ request, env }) {
         headers: { "Content-Type": "text/plain" },
         body: JSON.stringify({
           ...formData,
+          privacyConsent: true,
           timestamp: new Date().toLocaleString("es-MX", {
             timeZone: "America/Mexico_City",
           }),

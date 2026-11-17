@@ -3,9 +3,9 @@ export const client = {
 
   // ── Contacto ─────────────────────────────────────────────────────────────
   phone: "+52 55 1380 8550",
-  phoneForTel: "+525513808450",
+  phoneForTel: "+525513808550",
   phoneFormatted: "(55) 1380 8550",
-  whatsapp: "https://wa.me/525500000000",
+  whatsapp: "#",
 
   email: "contacto@grupogii.com",
 

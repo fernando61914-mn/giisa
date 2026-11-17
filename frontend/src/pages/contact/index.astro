@@ -143,6 +143,24 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? "";
               ></textarea>
             </label>
 
+            <label class="flex items-start gap-2 text-sm text-text-muted">
+              <input
+                type="checkbox"
+                name="privacyConsent"
+                required
+                class="mt-1 size-4 shrink-0 accent-primary"
+              />
+              <span>
+                He leído y acepto el
+                <a
+                  href="/privacy"
+                  class="font-semibold text-primary underline underline-offset-2"
+                >
+                  Aviso de privacidad
+                </a>.
+              </span>
+            </label>
+
             <!-- Turnstile CAPTCHA -->
             <div
               class="cf-turnstile"
@@ -287,18 +305,39 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? "";
 
 <script>
   document.addEventListener("astro:page-load", () => {
-    const form = document.getElementById("contact-form");
-    const btn = document.getElementById("submit-btn");
+    const formElement = document.getElementById("contact-form");
+    const submitButton = document.getElementById("submit-btn");
     const errorBox = document.getElementById("form-error");
 
-    if (!form || !btn) return;
+    if (
+      !(formElement instanceof HTMLFormElement) ||
+      !(submitButton instanceof HTMLButtonElement)
+    ) {
+      return;
+    }
+
+    const form = formElement;
+    const btn = submitButton;
+
+    const fieldValue = (name: string) => {
+      const field = form.elements.namedItem(name);
+      return field instanceof HTMLInputElement ||
+        field instanceof HTMLTextAreaElement ||
+        field instanceof HTMLSelectElement
+        ? field.value
+        : "";
+    };
+
+    const isChecked = (name: string) => {
+      const field = form.elements.namedItem(name);
+      return field instanceof HTMLInputElement && field.checked;
+    };
 
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
 
       // Honeypot anti-spam
-      const honeypot = form.querySelector('[name="bot-field"]');
-      if (honeypot && honeypot.value) return;
+      if (fieldValue("bot-field")) return;
 
       if (!form.checkValidity()) {
         form.reportValidity();
@@ -306,9 +345,7 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? "";
       }
 
       // Verificar que Turnstile fue completado
-      const turnstileToken = form.querySelector(
-        '[name="cf-turnstile-response"]',
-      )?.value;
+      const turnstileToken = fieldValue("cf-turnstile-response");
       if (!turnstileToken) {
         if (errorBox) {
           errorBox.textContent =
@@ -323,12 +360,13 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? "";
       if (errorBox) errorBox.classList.add("hidden");
 
       const data = {
-        name: form.querySelector('[name="name"]').value,
-        company: form.querySelector('[name="company"]').value,
-        email: form.querySelector('[name="email"]').value,
-        phone: form.querySelector('[name="phone"]').value,
-        projectType: form.querySelector('[name="projectType"]').value,
-        message: form.querySelector('[name="message"]').value,
+        name: fieldValue("name"),
+        company: fieldValue("company"),
+        email: fieldValue("email"),
+        phone: fieldValue("phone"),
+        projectType: fieldValue("projectType"),
+        message: fieldValue("message"),
+        privacyConsent: isChecked("privacyConsent"),
         "cf-turnstile-response": turnstileToken,
       };
 
@@ -345,16 +383,21 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? "";
           const { error } = await res.json().catch(() => ({}));
           throw new Error(error ?? "Error del servidor");
         }
-      } catch (err) {
+      } catch (error) {
         btn.disabled = false;
         btn.textContent = "Enviar mensaje";
         if (errorBox) {
           errorBox.textContent =
-            err.message || "Ocurrió un error. Por favor intenta de nuevo.";
+            error instanceof Error && error.message
+              ? error.message
+              : "Ocurrió un error. Por favor intenta de nuevo.";
           errorBox.classList.remove("hidden");
         }
         // Resetear Turnstile para que el usuario pueda reintentar
-        if (window.turnstile) window.turnstile.reset();
+        const turnstile = (
+          window as Window & { turnstile?: { reset: () => void } }
+        ).turnstile;
+        turnstile?.reset();
       }
     });
   });

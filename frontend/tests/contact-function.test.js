@@ -9,6 +9,7 @@ const validBody = {
   phone: "5512345678",
   projectType: "Obra Civil",
   message: "Solicitud de prueba aislada",
+  privacyConsent: true,
   "cf-turnstile-response": "valid-turnstile-token",
 };
 
@@ -66,6 +67,21 @@ test("acepta honeypot sin reenviar datos", async (t) => {
   assert.deepEqual(await response.json(), { success: true });
 });
 
+test("rechaza solicitudes sin consentimiento de privacidad", async (t) => {
+  t.mock.method(globalThis, "fetch", async () => {
+    assert.fail("No se debe llamar a proveedores sin consentimiento");
+  });
+
+  const { privacyConsent, ...bodyWithoutConsent } = validBody;
+  const response = await onRequestPost({
+    request: createRequest(bodyWithoutConsent),
+    env: validEnv,
+  });
+
+  assert.equal(privacyConsent, true);
+  assert.equal(response.status, 400);
+});
+
 test("no reenvía si Turnstile rechaza el token", async (t) => {
   let callCount = 0;
   t.mock.method(globalThis, "fetch", async () => {
@@ -104,6 +120,7 @@ test("reenvía solo datos permitidos y la clave al Apps Script; no devuelve la c
   assert.equal(forwarded.sharedSecret, validEnv.APPS_SCRIPT_SHARED_SECRET);
   assert.equal(forwarded.unexpected, undefined);
   assert.equal(forwarded["cf-turnstile-response"], undefined);
+  assert.equal(forwarded.privacyConsent, true);
   assert.equal(
     JSON.stringify(result).includes(validEnv.APPS_SCRIPT_SHARED_SECRET),
     false,

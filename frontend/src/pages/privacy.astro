@@ -1,0 +1,132 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import Banner from "../components/Banner.astro";
+import { brand } from "../config/brand";
+import { client } from "../data/client";
+---
+
+<BaseLayout
+  title="Aviso de privacidad"
+  description={`Aviso de privacidad de ${brand.name} sobre el tratamiento de datos enviados mediante el formulario de contacto.`}
+>
+  <Header slot="header" />
+  <Banner title="Aviso de privacidad" />
+
+  <article class="mx-auto max-w-3xl px-4 py-section sm:px-6">
+    <p class="text-sm text-text-muted">
+      Última actualización: 17 de noviembre de 2026
+    </p>
+
+    <div class="mt-8 space-y-8 text-text-muted leading-relaxed">
+      <section>
+        <h2 class="font-heading text-h3 font-bold text-text">
+          Responsable del tratamiento
+        </h2>
+        <p class="mt-3">
+          Grupo de Infraestructura Integral, S.A. de C.V. (GIISA), con domicilio
+          en {client.address} y correo de contacto {client.email}, es responsable
+          del tratamiento de los datos personales que reciba mediante este sitio.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="font-heading text-h3 font-bold text-text">
+          Datos que podemos recabar
+        </h2>
+        <p class="mt-3">
+          Cuando utilizas el formulario podemos solicitar nombre, empresa, correo
+          electrónico, teléfono, tipo de proyecto y el contenido de tu mensaje.
+          No solicitamos deliberadamente datos personales sensibles. Evita
+          incluirlos en el mensaje.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="font-heading text-h3 font-bold text-text">
+          Finalidades
+        </h2>
+        <p class="mt-3">
+          Utilizamos estos datos para responder consultas, preparar y dar
+          seguimiento a cotizaciones, comunicarnos sobre el proyecto solicitado y
+          atender obligaciones legales relacionadas con la solicitud. No usamos
+          los datos del formulario para publicidad no solicitada.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="font-heading text-h3 font-bold text-text">
+          Almacenamiento y proveedores
+        </h2>
+        <p class="mt-3">
+          El formulario se procesa mediante servicios de Cloudflare, incluido
+          Turnstile para prevenir envíos automatizados, y Google Apps Script y
+          Google Sheets para registrar y gestionar las solicitudes. Estos
+          proveedores pueden procesar información técnica y los datos enviados
+          desde centros de datos fuera de México, conforme a sus condiciones y
+          políticas de privacidad. GIISA no vende tus datos personales.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="font-heading text-h3 font-bold text-text">
+          Conservación y seguridad
+        </h2>
+        <p class="mt-3">
+          Conservaremos los datos durante el tiempo necesario para atender la
+          solicitud, mantener la relación comercial correspondiente y cumplir
+          obligaciones legales. Aplicamos medidas administrativas y técnicas
+          razonables para protegerlos contra acceso, uso o divulgación no
+          autorizados.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="font-heading text-h3 font-bold text-text">
+          Derechos ARCO y revocación del consentimiento
+        </h2>
+        <p class="mt-3">
+          Puedes solicitar acceso, rectificación, cancelación u oposición al
+          tratamiento de tus datos, así como revocar tu consentimiento, escribiendo
+          a <a
+            href={`mailto:${client.email}`}
+            class="font-semibold text-primary underline underline-offset-2"
+            >{client.email}</a
+          > con el asunto “Datos personales / derechos ARCO”. Incluye tu nombre,
+          un medio para responderte, el derecho que deseas ejercer y la
+          información necesaria para localizar tus datos. Podremos pedir
+          información razonable para verificar tu identidad. La revocación no
+          tendrá efectos retroactivos y puede estar sujeta a obligaciones legales
+          de conservación.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="font-heading text-h3 font-bold text-text">
+          Cookies y tecnologías similares
+        </h2>
+        <p class="mt-3">
+          El sitio utiliza almacenamiento local para recordar preferencias de
+          visualización y carga Cloudflare Turnstile para proteger el formulario.
+          Turnstile puede procesar datos técnicos del navegador y conexión para
+          detectar actividad automatizada. Puedes configurar tu navegador para
+          limitar cookies y almacenamiento local; algunas funciones podrían no
+          operar correctamente.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="font-heading text-h3 font-bold text-text">
+          Cambios a este aviso
+        </h2>
+        <p class="mt-3">
+          Cualquier actualización se publicará en esta página con su fecha de
+          revisión. Para dudas sobre este aviso, contáctanos en {client.email}.
+        </p>
+      </section>
+    </div>
+  </article>
+
+  <Footer slot="footer" />
+</BaseLayout>

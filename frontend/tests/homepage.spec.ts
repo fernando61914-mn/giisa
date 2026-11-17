@@ -36,6 +36,17 @@ test.describe('Homepage', () => {
     );
   });
 
+  test('contact form requires privacy notice consent', async ({ page }) => {
+    await page.goto('/contact');
+    await expect(page.locator('input[name="privacyConsent"]')).toHaveAttribute(
+      'required',
+      '',
+    );
+    await expect(
+      page.getByRole('link', { name: 'Aviso de privacidad' }).first(),
+    ).toHaveAttribute('href', '/privacy');
+  });
+
   test('project cards do not link to unfinished detail pages', async ({ page }) => {
     await page.goto('/');
     await expect(page.locator('#proyectos a[href^="/projects/"]')).toHaveCount(0);
