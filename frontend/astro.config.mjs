@@ -8,20 +8,6 @@ export default defineConfig({
   site: "https://grupogii.com",
   output: "static",
 
-  // Permite que Astro descargue y optimice imágenes remotas en build time
-  image: {
-    remotePatterns: [
-      // Strapi local (dev)
-      { protocol: "http", hostname: "localhost" },
-      // Strapi Cloud (producción) — todos los subdominios de strapiapp.com
-      { protocol: "https", hostname: "*.strapiapp.com" },
-      // Cloudinary (si Strapi Cloud lo usa como proveedor de media)
-      { protocol: "https", hostname: "res.cloudinary.com" },
-      // Unsplash (placeholders de desarrollo)
-      { protocol: "https", hostname: "images.unsplash.com" },
-    ],
-  },
-
   integrations: [sitemap(), robotsTxt()],
 
   fonts: [

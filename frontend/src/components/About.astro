@@ -21,7 +21,7 @@ const descripcion =
 const imageAlt = data?.imagen?.alternativeText ?? "Equipo GIISA en obra";
 const boton = data?.boton ?? { texto: "Conócenos más", url: "/about" };
 
-// Prioridad: imagen local (Astro optimizada) > imagenPrincipal URL > placeholder
+// Prioridad: imagen local (Astro optimizada) > imagen remota > placeholder
 const imagenLocal = aboutImages.principal;
 const imagenUrl = data?.imagen?.url;
 ---

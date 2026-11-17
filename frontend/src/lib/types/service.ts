@@ -1,4 +1,4 @@
-import type { StrapiImagen, Seo } from './shared';
+import type { RemoteImage, Seo } from './shared';
 
 export interface Servicio {
   id: number;
@@ -6,7 +6,7 @@ export interface Servicio {
   slug: string;
   descripcionCorta?: string;
   descripcionCompleta?: unknown;
-  imagenPrincipal?: StrapiImagen;
+  imagenPrincipal?: RemoteImage;
   icono?: string;
   orden?: number;
   destacado?: boolean;

@@ -1,5 +1,5 @@
 import type { ImageMetadata } from 'astro';
-import type { StrapiImagen, Galeria, Seo } from './shared';
+import type { RemoteImage, Galeria, Seo } from './shared';
 
 export interface Proyecto {
   id: number;
@@ -13,7 +13,7 @@ export interface Proyecto {
   /** Imagen local en src/assets/ → optimizada por Astro (WebP + srcset) */
   imagenLocal?: ImageMetadata;
   /** Imagen remota / URL (fallback para compatibilidad) */
-  imagenPrincipal?: StrapiImagen;
+  imagenPrincipal?: RemoteImage;
   galeria?: Galeria;
   destacado?: boolean;
   seo?: Seo;

@@ -1,7 +1,6 @@
 ---
 import type { EncabezadoSeccion } from "../lib/types/shared";
 import type { Servicio } from "../lib/types/service";
-import { strapiImageUrl } from "../lib/strapi";
 
 interface Props {
   encabezado?: EncabezadoSeccion;
@@ -51,9 +50,7 @@ const ocultos = items.slice(3);
       <!-- Siempre visibles (primeros 3) -->
       {
         visibles.map((s) => {
-          const imgSrc = s.imagenPrincipal
-            ? strapiImageUrl(s.imagenPrincipal.url)
-            : PLACEHOLDER_IMG;
+          const imgSrc = s.imagenPrincipal?.url || PLACEHOLDER_IMG;
           return (
             <li>
               <div class="flex h-full flex-col overflow-hidden rounded-xl border border-border bg-background shadow-sm">
@@ -87,9 +84,7 @@ const ocultos = items.slice(3);
       <!-- Ocultos inicialmente (servicios 4-6) -->
       {
         ocultos.map((s) => {
-          const imgSrc = s.imagenPrincipal
-            ? strapiImageUrl(s.imagenPrincipal.url)
-            : PLACEHOLDER_IMG;
+          const imgSrc = s.imagenPrincipal?.url || PLACEHOLDER_IMG;
           return (
             <li class="servicio-extra hidden">
               <div class="flex h-full flex-col overflow-hidden rounded-xl border border-border bg-background shadow-sm">

@@ -1,4 +1,4 @@
-export interface StrapiImagen {
+export interface RemoteImage {
   url: string;
   alternativeText?: string;
   width?: number;
@@ -44,7 +44,7 @@ export interface ComponenteHero {
   textoSuperior?: string;
   titulo: string;
   subtitulo?: string;
-  imagenFondo?: StrapiImagen;
+  imagenFondo?: RemoteImage;
   botonPrincipal?: Boton;
   botonSecundario?: Boton;
   alineacion?: 'izquierda' | 'centro' | 'derecha';
@@ -52,14 +52,14 @@ export interface ComponenteHero {
 
 export interface Nosotros {
   encabezado?: EncabezadoSeccion;
-  imagen?: StrapiImagen;
+  imagen?: RemoteImage;
   boton?: Boton;
 }
 
 export interface ComponenteCTA {
   titulo: string;
   descripcion?: string;
-  imagenFondo?: StrapiImagen;
+  imagenFondo?: RemoteImage;
   boton?: Boton;
   beneficios?: Beneficio[];
 }
@@ -67,9 +67,9 @@ export interface ComponenteCTA {
 export interface Seo {
   tituloSeo: string;
   descripcionSeo: string;
-  imagenOpenGraph?: StrapiImagen;
+  imagenOpenGraph?: RemoteImage;
 }
 
 export interface Galeria {
-  imagenes?: StrapiImagen[];
+  imagenes?: RemoteImage[];
 }
