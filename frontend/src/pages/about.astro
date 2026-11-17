@@ -5,76 +5,76 @@ import Footer from '../components/Footer.astro';
 import Banner from '../components/Banner.astro';
 import CTA from '../components/CTA.astro';
 import { Image } from 'astro:assets';
-import { brand } from '../config/brand';
-
-const team = [
-  { name: 'John Smith',   role: 'Founder & Lead Technician', image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&q=80' },
-  { name: 'Maria Garcia', role: 'Operations Manager',        image: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&q=80' },
-  { name: 'David Chen',   role: 'Senior Technician',         image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&q=80' },
-];
+import * as homeData from '../data/home';
+import { aboutImages } from '../config/images';
 ---
 
-<BaseLayout title="About Us" description={`Learn about ${brand.name} — our story, team, and commitment to quality service.`}>
+<BaseLayout
+  title="Sobre nosotros"
+  description="GIISA es una empresa mexicana de ingeniería y construcción especializada en infraestructura, edificación, supervisión y obra industrial."
+>
   <Header slot="header" />
 
-  <Banner title="About Us" />
+  <Banner title="Sobre GIISA" />
 
-  <!-- Story -->
   <section class="py-section">
-    <div class="mx-auto grid max-w-site grid-cols-1 items-center gap-8 px-4 sm:px-6 lg:grid-cols-2 lg:gap-14">
-      <div class="overflow-hidden rounded-lg shadow-lg">
-        <Image
-          src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=800&q=80"
-          alt="Our team planning a project together"
-          width={800}
-          height={600}
-          loading="lazy"
-          class="size-full object-cover"
-        />
-      </div>
+    <div class="mx-auto grid max-w-site grid-cols-1 items-center gap-10 px-4 sm:px-6 lg:grid-cols-2 lg:gap-16">
       <div class="space-y-5">
-        <span class="text-topper font-bold uppercase tracking-widest text-accent">Our Story</span>
-        <h2 class="font-heading text-h2 font-bold uppercase text-text">Built on trust, driven by quality</h2>
+        <span class="text-topper font-bold uppercase tracking-widest text-accent">
+          Grupo de Infraestructura Integral
+        </span>
+        <h2 class="font-heading text-h2 font-bold leading-tight text-text">
+          {homeData.nosotros.encabezado?.titulo}
+        </h2>
         <p class="text-text-muted leading-relaxed">
-          What started as a one-person operation has grown into a trusted local team. For over 15 years, we've served homeowners and businesses with reliable, high-quality work — and we plan to keep doing just that for decades to come.
-        </p>
-        <p class="text-text-muted leading-relaxed">
-          Every member of our crew is licensed, insured, and background-checked. We treat your property with the same care we'd give our own, and we stand behind every job with a satisfaction guarantee.
+          {homeData.nosotros.encabezado?.descripcion}
         </p>
       </div>
+      {
+        aboutImages.principal && (
+          <div class="overflow-hidden rounded-xl shadow-lg">
+            <Image
+              src={aboutImages.principal}
+              alt="Equipo de GIISA en una obra"
+              width={800}
+              height={600}
+              loading="lazy"
+              widths={[800, 1400]}
+              sizes="(max-width: 1024px) 100vw, 50vw"
+              class="size-full object-cover"
+            />
+          </div>
+        )
+      }
     </div>
   </section>
 
-  <!-- Team -->
   <section class="bg-surface py-section">
     <div class="mx-auto max-w-site px-4 sm:px-6">
       <div class="mx-auto mb-10 max-w-2xl text-center">
-        <span class="text-topper font-bold uppercase tracking-widest text-accent">Our Team</span>
-        <h2 class="mt-2 font-heading text-h2 font-bold uppercase text-text">Meet the crew</h2>
+        <h2 class="font-heading text-h2 font-bold text-text">
+          Áreas de especialidad
+        </h2>
+        <p class="mt-3 text-text-muted leading-relaxed">
+          Soluciones para proyectos de infraestructura, construcción y operación.
+        </p>
       </div>
-
-      <div class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
-        {team.map(({ name, role, image }) => (
-          <div class="overflow-hidden rounded-lg bg-background shadow-sm">
-            <Image
-              src={image}
-              alt={name}
-              width={400}
-              height={400}
-              loading="lazy"
-              class="aspect-square w-full object-cover"
-            />
-            <div class="p-5">
-              <h3 class="font-heading text-lg font-semibold text-text">{name}</h3>
-              <p class="text-sm text-text-muted">{role}</p>
-            </div>
-          </div>
+      <ul class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3" role="list">
+        {homeData.servicios.map((servicio) => (
+          <li class="rounded-lg border border-border bg-background p-6">
+            <h3 class="font-heading text-h3 font-semibold text-text">
+              {servicio.nombre}
+            </h3>
+            <p class="mt-2 text-sm leading-relaxed text-text-muted">
+              {servicio.descripcionCorta}
+            </p>
+          </li>
         ))}
-      </div>
+      </ul>
     </div>
   </section>
 
-  <CTA />
+  <CTA data={homeData.cta} />
 
   <Footer slot="footer" />
 </BaseLayout>

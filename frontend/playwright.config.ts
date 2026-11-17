@@ -2,6 +2,7 @@ import { defineConfig, devices } from '@playwright/test';
 
 export default defineConfig({
   testDir: './tests',
+  testMatch: '**/*.spec.ts',
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
@@ -9,7 +10,7 @@ export default defineConfig({
   reporter: [['html', { outputFolder: 'playwright-report', open: 'never' }]],
 
   use: {
-    baseURL: 'http://localhost:4321',
+    baseURL: 'http://127.0.0.1:4322',
     trace: 'on-first-retry',
   },
 
@@ -21,8 +22,8 @@ export default defineConfig({
   ],
 
   webServer: {
-    command: 'pnpm build && pnpm preview',
-    url: 'http://localhost:4321',
+    command: 'pnpm build && pnpm preview --host 127.0.0.1 --port 4322',
+    url: 'http://127.0.0.1:4322',
     reuseExistingServer: !process.env.CI,
     timeout: 120_000,
   },

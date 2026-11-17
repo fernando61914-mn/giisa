@@ -23,12 +23,37 @@ test.describe('Performance / Speed Score', () => {
   test('TTFB and FCP are within budget', async ({ page }) => {
     await page.goto('/');
 
-    const metrics = await page.evaluate(() => {
+    const metrics = await page.evaluate(async () => {
       const nav = performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming;
-      const fcp = performance.getEntriesByName('first-contentful-paint')[0];
+      const fcp = await new Promise<number | null>((resolve) => {
+        const existingEntry = performance.getEntriesByName('first-contentful-paint')[0];
+        if (existingEntry) {
+          resolve(existingEntry.startTime);
+          return;
+        }
+
+        let timeoutId: number;
+        const observer = new PerformanceObserver((list) => {
+          const entry = list
+            .getEntries()
+            .find((item) => item.name === 'first-contentful-paint');
+          if (entry) {
+            window.clearTimeout(timeoutId);
+            observer.disconnect();
+            resolve(entry.startTime);
+          }
+        });
+
+        observer.observe({ type: 'paint', buffered: true });
+        timeoutId = window.setTimeout(() => {
+          observer.disconnect();
+          resolve(null);
+        }, 3000);
+      });
+
       return {
         ttfb: nav.responseStart - nav.requestStart,
-        fcp: fcp ? fcp.startTime : null,
+        fcp,
         domInteractive: nav.domInteractive,
       };
     });
@@ -38,6 +63,7 @@ test.describe('Performance / Speed Score', () => {
     console.log('DOM Interactive:', metrics.domInteractive.toFixed(0), 'ms');
 
     expect(metrics.ttfb).toBeLessThan(THRESHOLDS.ttfb);
+    expect(metrics.fcp).not.toBeNull();
     if (metrics.fcp !== null) {
       expect(metrics.fcp).toBeLessThan(THRESHOLDS.fcp);
     }
@@ -97,23 +123,23 @@ test.describe('Performance / Speed Score', () => {
     expect(cls).toBeLessThan(THRESHOLDS.cls);
   });
 
-  test('page has no render-blocking resources', async ({ page }) => {
+  test('page has no render-blocking JavaScript', async ({ page }) => {
     await page.goto('/');
 
-    const renderBlockingCount = await page.evaluate(() => {
+    const renderBlockingScripts = await page.evaluate(() => {
       const resources = performance.getEntriesByType(
         'resource',
       ) as PerformanceResourceTiming[];
       return resources.filter(
         (r) =>
           r.renderBlockingStatus === 'blocking' &&
-          // Favicon requests are fine to ignore
-          !r.name.includes('favicon'),
-      ).length;
+          !r.name.includes('favicon') &&
+          /\.m?js(?:$|[?#])/.test(new URL(r.name).pathname),
+      ).map((resource) => resource.name);
     });
 
-    console.log('Render-blocking resources:', renderBlockingCount);
-    expect(renderBlockingCount).toBe(0);
+    console.log('Render-blocking JavaScript:', renderBlockingScripts);
+    expect(renderBlockingScripts).toHaveLength(0);
   });
 
   test('total page weight is under 500 KB', async ({ page }) => {

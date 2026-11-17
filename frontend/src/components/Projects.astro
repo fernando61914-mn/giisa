@@ -1,15 +1,14 @@
 ---
 import { Image } from 'astro:assets';
-import type { EncabezadoSeccion, Boton } from '../lib/types/shared';
+import type { EncabezadoSeccion } from '../lib/types/shared';
 import type { Proyecto } from '../lib/types/project';
 
 interface Props {
   encabezado?: EncabezadoSeccion;
   proyectos?: Proyecto[];
-  boton?: Boton;
 }
 
-const { encabezado, proyectos = [], boton } = Astro.props;
+const { encabezado, proyectos = [] } = Astro.props;
 
 const textoSuperior = encabezado?.textoSuperior ?? 'Nuestro portafolio';
 const titulo        = encabezado?.titulo        ?? 'Proyectos Destacados';
@@ -27,16 +26,13 @@ const PLACEHOLDER_IMG = 'https://images.unsplash.com/photo-1541888946425-d81bb19
     </div>
 
     <!-- Grid de proyectos -->
-    {proyectos.length > 0 ? (
+    {proyectos.length > 0 && (
       <ul class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4" role="list">
         {proyectos.map((p) => {
           const altText = p.imagenPrincipal?.alternativeText ?? p.nombre;
           return (
             <li>
-              <a
-                href={`/projects/${p.slug}`}
-                class="group relative flex aspect-square overflow-hidden rounded-xl shadow-md"
-              >
+              <div class="group relative flex aspect-square overflow-hidden rounded-xl shadow-md">
                 {p.imagenLocal ? (
                   <Image
                     src={p.imagenLocal}
@@ -70,42 +66,11 @@ const PLACEHOLDER_IMG = 'https://images.unsplash.com/photo-1541888946425-d81bb19
                 <div class="absolute bottom-0 left-0 right-0 bg-linear-to-t from-dark/70 to-transparent p-4 group-hover:opacity-0 transition-opacity duration-300">
                   <h3 class="font-heading text-sm font-bold text-white">{p.nombre}</h3>
                 </div>
-              </a>
+              </div>
             </li>
           );
         })}
       </ul>
-    ) : (
-      <!-- Fallback estático -->
-      <ul class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4" role="list">
-        {[
-          'Nave industrial',
-          'Puente vehicular',
-          'Edificio corporativo',
-          'Carretera federal',
-        ].map((nombre) => (
-          <li>
-            <div class="group relative flex aspect-square overflow-hidden rounded-xl shadow-md">
-              <img src={PLACEHOLDER_IMG} alt={nombre} width={400} height={400} loading="lazy" class="size-full object-cover opacity-80" />
-              <div class="absolute bottom-0 left-0 right-0 bg-linear-to-t from-dark/70 to-transparent p-4">
-                <h3 class="font-heading text-sm font-bold text-white">{nombre}</h3>
-              </div>
-            </div>
-          </li>
-        ))}
-      </ul>
-    )}
-
-    <!-- Botón ver todos -->
-    {boton && (
-      <div class="mt-10 text-center">
-        <a
-          href={boton.url}
-          class="inline-flex min-h-11 items-center gap-2 rounded-md border-2 border-primary px-7 py-3 text-base font-bold text-primary transition-colors hover:bg-primary hover:text-primary-fg"
-        >
-          {boton.texto}
-        </a>
-      </div>
     )}
   </div>
 </section>

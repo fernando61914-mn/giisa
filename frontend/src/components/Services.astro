@@ -1,6 +1,7 @@
 ---
 import type { EncabezadoSeccion } from "../lib/types/shared";
 import type { Servicio } from "../lib/types/service";
+import Icon from "./Icon.astro";
 
 interface Props {
   encabezado?: EncabezadoSeccion;
@@ -16,8 +17,14 @@ const descripcion =
   encabezado?.descripcion ??
   "Soluciones integrales en construcción, supervisión e infraestructura para proyectos de cualquier escala.";
 
-const PLACEHOLDER_IMG =
-  "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600&q=70";
+const serviceIcons = [
+  "construccion",
+  "edificio",
+  "construccion",
+  "escudo",
+  "herramienta",
+  "herramienta",
+];
 
 // Máximo 6 servicios; los primeros 3 visibles, el resto expandible
 const items = servicios.slice(0, 6);
@@ -49,22 +56,27 @@ const ocultos = items.slice(3);
     >
       <!-- Siempre visibles (primeros 3) -->
       {
-        visibles.map((s) => {
-          const imgSrc = s.imagenPrincipal?.url || PLACEHOLDER_IMG;
+        visibles.map((s, index) => {
           return (
             <li>
               <div class="flex h-full flex-col overflow-hidden rounded-xl border border-border bg-background shadow-sm">
-                <div class="aspect-video overflow-hidden">
-                  <img
-                    src={imgSrc}
-                    alt={s.imagenPrincipal?.alternativeText ?? s.nombre}
-                    width={480}
-                    height={270}
-                    loading="lazy"
-                    decoding="async"
-                    class="size-full object-cover"
-                  />
-                </div>
+                {s.imagenPrincipal ? (
+                  <div class="aspect-video overflow-hidden">
+                    <img
+                      src={s.imagenPrincipal.url}
+                      alt={s.imagenPrincipal.alternativeText ?? s.nombre}
+                      width={480}
+                      height={270}
+                      loading="lazy"
+                      decoding="async"
+                      class="size-full object-cover"
+                    />
+                  </div>
+                ) : (
+                  <div class="flex aspect-video items-center justify-center bg-primary/5 text-primary">
+                    <Icon name={serviceIcons[index]} class="size-12" />
+                  </div>
+                )}
                 <div class="flex flex-1 flex-col p-5">
                   <h3 class="font-heading text-h3 font-semibold text-text">
                     {s.nombre}
@@ -83,22 +95,30 @@ const ocultos = items.slice(3);
 
       <!-- Ocultos inicialmente (servicios 4-6) -->
       {
-        ocultos.map((s) => {
-          const imgSrc = s.imagenPrincipal?.url || PLACEHOLDER_IMG;
+        ocultos.map((s, index) => {
           return (
             <li class="servicio-extra hidden">
               <div class="flex h-full flex-col overflow-hidden rounded-xl border border-border bg-background shadow-sm">
-                <div class="aspect-video overflow-hidden">
-                  <img
-                    src={imgSrc}
-                    alt={s.imagenPrincipal?.alternativeText ?? s.nombre}
-                    width={480}
-                    height={270}
-                    loading="lazy"
-                    decoding="async"
-                    class="size-full object-cover"
-                  />
-                </div>
+                {s.imagenPrincipal ? (
+                  <div class="aspect-video overflow-hidden">
+                    <img
+                      src={s.imagenPrincipal.url}
+                      alt={s.imagenPrincipal.alternativeText ?? s.nombre}
+                      width={480}
+                      height={270}
+                      loading="lazy"
+                      decoding="async"
+                      class="size-full object-cover"
+                    />
+                  </div>
+                ) : (
+                  <div class="flex aspect-video items-center justify-center bg-primary/5 text-primary">
+                    <Icon
+                      name={serviceIcons[index + visibles.length]}
+                      class="size-12"
+                    />
+                  </div>
+                )}
                 <div class="flex flex-1 flex-col p-5">
                   <h3 class="font-heading text-h3 font-semibold text-text">
                     {s.nombre}

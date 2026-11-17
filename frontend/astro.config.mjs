@@ -11,7 +11,9 @@ export default defineConfig({
   integrations: [
     sitemap({
       filter: (page) =>
-        new URL(page).pathname.replace(/\/$/, "") !== "/contact/success",
+        !["/contact/success", "/reviews"].includes(
+          new URL(page).pathname.replace(/\/$/, ""),
+        ),
     }),
     robotsTxt(),
   ],

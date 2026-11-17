@@ -35,4 +35,9 @@ test.describe('Homepage', () => {
       'noindex, nofollow',
     );
   });
+
+  test('project cards do not link to unfinished detail pages', async ({ page }) => {
+    await page.goto('/');
+    await expect(page.locator('#proyectos a[href^="/projects/"]')).toHaveCount(0);
+  });
 });
