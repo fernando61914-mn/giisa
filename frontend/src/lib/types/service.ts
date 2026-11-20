@@ -6,6 +6,7 @@ export interface Servicio {
   slug: string;
   descripcionCorta?: string;
   descripcionCompleta?: unknown;
+  url?: string;
   imagenPrincipal?: RemoteImage;
   icono?: string;
   orden?: number;

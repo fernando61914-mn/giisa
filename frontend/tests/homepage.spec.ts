@@ -47,6 +47,41 @@ test.describe('Homepage', () => {
     ).toHaveAttribute('href', '/privacy');
   });
 
+  test('services page includes digital solutions without client brand names', async ({ page }) => {
+    await page.goto('/services');
+    await expect(
+      page.getByRole('heading', { name: 'Soluciones Digitales' }),
+    ).toBeVisible();
+    await expect(page.getByText(/CRM y CMS a medida/i)).toBeVisible();
+    await expect(page.getByText(/Isuzu|Totalplay|Proytel|Frago/i)).toHaveCount(0);
+  });
+
+  test('electrical services are featured and lead to their detail page', async ({ page }) => {
+    await page.goto('/');
+    await expect(
+      page.getByRole('heading', { name: 'Servicios Eléctricos' }),
+    ).toBeVisible();
+    await expect(
+      page.getByRole('link', { name: 'Ver servicios eléctricos' }).first(),
+    ).toHaveAttribute('href', '/servicios-electricos');
+  });
+
+  test('footer links directly to the electrical services page', async ({ page }) => {
+    await page.goto('/');
+    await expect(
+      page.getByRole('contentinfo').getByRole('link', {
+        name: 'Servicios eléctricos',
+      }),
+    ).toHaveAttribute('href', '/servicios-electricos');
+  });
+
+  test('contact form can classify an electrical project', async ({ page }) => {
+    await page.goto('/contact');
+    await expect(
+      page.locator('select[name="projectType"] option[value="Servicios Eléctricos"]'),
+    ).toHaveCount(1);
+  });
+
   test('project cards do not link to unfinished detail pages', async ({ page }) => {
     await page.goto('/');
     await expect(page.locator('#proyectos a[href^="/projects/"]')).toHaveCount(0);
