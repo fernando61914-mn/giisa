@@ -83,7 +83,7 @@ export const encabezadoServicios: EncabezadoSeccion = {
   textoSuperior: 'Lo que hacemos',
   titulo: 'Nuestros Servicios',
   descripcion:
-    'Soluciones integrales en construcción, supervisión e infraestructura para proyectos de cualquier escala.',
+    'Soluciones en construcción, infraestructura, servicios eléctricos y tecnología para empresas.',
 };
 
 export const servicios: Servicio[] = [
@@ -96,31 +96,48 @@ export const servicios: Servicio[] = [
   },
   {
     id: 2,
+    nombre: 'Servicios Eléctricos',
+    slug: 'servicios-electricos',
+    descripcionCorta:
+      'Ingeniería, construcción, pruebas y mantenimiento de instalaciones de baja, media y alta tensión, subestaciones, plantas de emergencia e iluminación.',
+    icono: 'electrico',
+    url: '/servicios-electricos',
+  },
+  {
+    id: 3,
     nombre: 'Edificación',
     slug: 'edificacion',
     descripcionCorta:
       'Edificios corporativos, centros comerciales, hospitales, escuelas y vivienda vertical. Proyectos de cualquier escala y complejidad.',
   },
   {
-    id: 3,
+    id: 4,
     nombre: 'Naves Industriales',
     slug: 'naves-industriales',
     descripcionCorta:
       'Diseño y construcción de naves industriales, ampliaciones, plataformas y estructuras metálicas a la medida de tu operación.',
   },
   {
-    id: 4,
+    id: 5,
     nombre: 'Supervisión de Obra',
     slug: 'supervision-de-obra',
     descripcionCorta:
       'Supervisión técnica, control de calidad, seguimiento de programas, gestión documental y control de costos en cada etapa.',
   },
   {
-    id: 5,
+    id: 6,
     nombre: 'Mantenimiento Integral',
     slug: 'mantenimiento-integral',
     descripcionCorta:
       'Instalaciones eléctricas, sistemas electromecánicos, mantenimiento preventivo y correctivo, y conservación de inmuebles.',
+  },
+  {
+    id: 7,
+    nombre: 'Soluciones Digitales',
+    slug: 'soluciones-digitales',
+    descripcionCorta:
+      'Te acompañamos desde el levantamiento y la cotización hasta el desarrollo, la puesta en marcha y el soporte acordado. Creamos sitios web, portales, CRM/CMS e integraciones para empresas.',
+    icono: 'codigo',
   },
 ];
 

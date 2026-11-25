@@ -14,6 +14,7 @@ const navLinks = [
 ];
 
 const serviciosLinks = [
+  { label: "Servicios eléctricos", href: "/servicios-electricos" },
   { label: "Construcción", href: "/services" },
   { label: "Supervisión", href: "/services" },
   { label: "Infraestructura", href: "/services" },
@@ -148,14 +149,16 @@ const serviciosLinks = [
           Contacto
         </h3>
         <ul class="mt-4 space-y-3 text-sm">
-          <li>
-            <a
-              href={`tel:${client.phoneForTel}`}
-              class="transition-colors hover:text-white"
-            >
-              {client.phoneFormatted}
-            </a>
-          </li>
+          {client.phones.map((phone) => (
+            <li>
+              <a
+                href={`tel:${phone.tel}`}
+                class="transition-colors hover:text-white"
+              >
+                {phone.formatted}
+              </a>
+            </li>
+          ))}
           <li>
             <a
               href={`mailto:${client.email}`}

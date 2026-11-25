@@ -17,17 +17,18 @@ const descripcion =
   encabezado?.descripcion ??
   "Soluciones integrales en construcción, supervisión e infraestructura para proyectos de cualquier escala.";
 
-const serviceIcons = [
-  "construccion",
-  "edificio",
-  "construccion",
-  "escudo",
-  "herramienta",
-  "herramienta",
-];
+const serviceIcons: Record<string, string> = {
+  "obra-civil": "construccion",
+  "servicios-electricos": "electrico",
+  edificacion: "edificio",
+  "naves-industriales": "construccion",
+  "supervision-de-obra": "escudo",
+  "mantenimiento-integral": "herramienta",
+  "soluciones-digitales": "codigo",
+};
 
-// Máximo 6 servicios; los primeros 3 visibles, el resto expandible
-const items = servicios.slice(0, 6);
+// Los primeros 3 servicios se muestran inicialmente; el resto es expandible.
+const items = servicios;
 const visibles = items.slice(0, 3);
 const ocultos = items.slice(3);
 ---
@@ -56,7 +57,7 @@ const ocultos = items.slice(3);
     >
       <!-- Siempre visibles (primeros 3) -->
       {
-        visibles.map((s, index) => {
+        visibles.map((s) => {
           return (
             <li>
               <div class="flex h-full flex-col overflow-hidden rounded-xl border border-border bg-background shadow-sm">
@@ -74,7 +75,10 @@ const ocultos = items.slice(3);
                   </div>
                 ) : (
                   <div class="flex aspect-video items-center justify-center bg-primary/5 text-primary">
-                    <Icon name={serviceIcons[index]} class="size-12" />
+                    <Icon
+                      name={s.icono ?? serviceIcons[s.slug] ?? "default"}
+                      class="size-12"
+                    />
                   </div>
                 )}
                 <div class="flex flex-1 flex-col p-5">
@@ -86,6 +90,14 @@ const ocultos = items.slice(3);
                       {s.descripcionCorta}
                     </p>
                   )}
+                  {s.url && (
+                    <a
+                      href={s.url}
+                      class="mt-4 inline-flex min-h-10 items-center font-semibold text-primary hover:text-accent"
+                    >
+                      Ver servicios eléctricos
+                    </a>
+                  )}
                 </div>
               </div>
             </li>
@@ -95,7 +107,7 @@ const ocultos = items.slice(3);
 
       <!-- Ocultos inicialmente (servicios 4-6) -->
       {
-        ocultos.map((s, index) => {
+        ocultos.map((s) => {
           return (
             <li class="servicio-extra hidden">
               <div class="flex h-full flex-col overflow-hidden rounded-xl border border-border bg-background shadow-sm">
@@ -114,7 +126,7 @@ const ocultos = items.slice(3);
                 ) : (
                   <div class="flex aspect-video items-center justify-center bg-primary/5 text-primary">
                     <Icon
-                      name={serviceIcons[index + visibles.length]}
+                      name={s.icono ?? serviceIcons[s.slug] ?? "default"}
                       class="size-12"
                     />
                   </div>
@@ -127,6 +139,14 @@ const ocultos = items.slice(3);
                     <p class="mt-2 flex-1 text-sm leading-relaxed text-text-muted">
                       {s.descripcionCorta}
                     </p>
+                  )}
+                  {s.url && (
+                    <a
+                      href={s.url}
+                      class="mt-4 inline-flex min-h-10 items-center font-semibold text-primary hover:text-accent"
+                    >
+                      Ver servicios eléctricos
+                    </a>
                   )}
                 </div>
               </div>
